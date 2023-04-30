@@ -4,47 +4,57 @@ import {getWeather} from "../../api/weatherAPI";
 import {WeatherResponse} from "../../types/WeatherResponse";
 import {WeatherState} from "../../types/State";
 
+import error_img from "./assets/error.svg"
+
+const getCurrentPosition = async (): Promise<string> => {
+    return new Promise((resolve): void => {
+        navigator.geolocation.getCurrentPosition(
+            (position: GeolocationPosition) => resolve(position.coords.latitude + ',' + position.coords.longitude),
+            () => resolve('Tbilisi')
+        )
+    })
+}
+
 const WeatherWidget: FC = () => {
 
     const [weather, setWeather] = useState<WeatherState>({city: '', temp_c: '', weather_icon: '', weather_text: ''})
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(
-            (position: GeolocationPosition): void => {
-                getWeather(position.coords.latitude + ',' + position.coords.longitude)
-                    .then((response: WeatherResponse): void => {
-                            setWeather({
-                                city: response.location.name,
-                                temp_c: response.current.temp_c + "°",
-                                weather_icon: response.current.condition.icon,
-                                weather_text: response.current.condition.text
-                            })
-                            setIsLoading(false)
-                        }
-                    )
-            },
-            (): void => {
-                getWeather("Tbilisi")
-                    .then((response: WeatherResponse): void => {
-                            setWeather({
-                                city: response.location.name,
-                                temp_c: response.current.temp_c + "°",
-                                weather_icon: response.current.condition.icon,
-                                weather_text: response.current.condition.text
-                            })
-                            setIsLoading(false)
-                        }
-                    )
-            }
-        )
+
+        getCurrentPosition().then(
+            location => {
+                getWeather(location)
+                    .then((response: WeatherResponse) => {
+                        setWeather({
+                            city: response.location.name,
+                            temp_c: response.current.temp_c + "°",
+                            weather_icon: response.current.condition.icon,
+                            weather_text: response.current.condition.text
+                        })
+                        setIsLoading(false)
+                    })
+                    .catch(() => {
+                        setWeather({
+                            city: "Weather API Error",
+                            temp_c: "",
+                            weather_icon: error_img,
+                            weather_text: "Error"
+                        })
+                        setIsLoading(false)
+                    })
+            })
+
     }, [])
 
     return (
         <div className={"weather-widget"}>
-            <img className={isLoading ? "weather-widget__icon skeleton skeleton-img" : "weather-widget__icon"} src={weather.weather_icon} alt={weather.weather_text}/>
-            <div className={isLoading ? "weather-widget__location skeleton skeleton-text" : "weather-widget__location"}>{weather.city}</div>
-            <div className={isLoading ? "weather-widget__temp skeleton skeleton-text" : "weather-widget__temp"}>{weather.temp_c}</div>
+            <img className={`weather-widget__icon ${isLoading ? "skeleton skeleton-img" : null}`}
+                 src={weather.weather_icon} alt={weather.weather_text}/>
+            <div
+                className={`weather-widget__location ${isLoading ? "skeleton skeleton-text" : null}`}>{weather.city}</div>
+            <div
+                className={`weather-widget__temp ${isLoading ? "skeleton skeleton-text" : null}`}>{weather.temp_c}</div>
         </div>
     )
 }
