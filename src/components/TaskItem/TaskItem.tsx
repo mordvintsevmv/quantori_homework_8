@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, useState} from "react";
 import {Item} from "../../types/Item";
 import "./TaskItem.css"
 
@@ -20,6 +20,8 @@ interface TaskItemProps {
 }
 
 const TaskItem: FC<TaskItemProps> = ({item, deleteItem, checkItem}) => {
+
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     // Parsing date (for situations when there is string instead of Date)
     const parsed_date: Date = new Date(Date.parse(item.date_complete))
@@ -51,23 +53,26 @@ const TaskItem: FC<TaskItemProps> = ({item, deleteItem, checkItem}) => {
     const tags = item.tag.map((tag) => <TaskTag name={tag} key={tag} isColored={!item.isChecked}/>)
 
     return (
-        <div className={"task-item"}>
+        <div className={`task-item ${isLoading ? "task-item--loading" : null}`}>
 
-            <button className={"task-item__checkbox"} onClick={() => checkItem(item.id)}>
+            {<button className={"task-item__checkbox"} onClick={() => {
+                setIsLoading(true);
+                checkItem(item.id)
+            }}>
                 <img
                     className={item.isChecked ? "task-item__checkbox-img task-item__checkbox-img--checked" : "task-item__checkbox-img task-item__checkbox-img--unchecked"}
                     src={item.isChecked ? checkbox_disabled_icon : checkbox_unchecked_icon}
                     alt={item.isChecked ? "Uncheck" : "Check"}/>
-            </button>
+            </button>}
 
             <div className={"task-item__info"}>
-                <h3 className={"task-item__title"}>{item.title}</h3>
+                <h3 className={`task-item__title`}>{item.title}</h3>
 
                 <div className={"task-item__bottom"}>
-                    <div className={"task-item__tags"}>
+                    <div className={`task-item__tags `}>
                         {tags}
                     </div>
-                    <div className={"task-item__date"}>{day_text}</div>
+                    <div className={`task-item__date `}>{day_text}</div>
                 </div>
             </div>
 
@@ -80,7 +85,10 @@ const TaskItem: FC<TaskItemProps> = ({item, deleteItem, checkItem}) => {
                         </Link>
                     </button>
 
-                    <button className={"task-item__control-item"} onClick={() => deleteItem(item.id)}>
+                    <button className={"task-item__control-item"} onClick={() => {
+                        setIsLoading(true);
+                        deleteItem(item.id)
+                    }}>
                         <img src={trash_icon} alt={"Delete"}/>
                     </button>
                 </div>

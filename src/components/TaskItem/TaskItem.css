@@ -133,5 +133,7 @@
     }
 }
 
-
-
+.task-item--loading{
+    opacity: 0.4;
+    pointer-events:none;
+}
