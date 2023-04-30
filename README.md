@@ -1,9 +1,3 @@
-## ToDo
-
-- [ ] Custom Tag
-- [ ] Fix promise
-- [ ] Refactoring
-
 # Quantori Homework #8
 
 ### React
