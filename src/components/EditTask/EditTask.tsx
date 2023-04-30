@@ -35,23 +35,23 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
                     date_ref.current.value = item.date_complete
                 }
 
-                if (item.tag.includes("home") && tag_home_ref.current){
+                if (item.tag.includes("home") && tag_home_ref.current) {
                     tag_home_ref.current.checked = true
                 }
 
-                if (item.tag.includes("health") && tag_health_ref.current){
+                if (item.tag.includes("health") && tag_health_ref.current) {
                     tag_health_ref.current.checked = true
                 }
 
-                if (item.tag.includes("work") && tag_work_ref.current){
+                if (item.tag.includes("work") && tag_work_ref.current) {
                     tag_work_ref.current.checked = true
                 }
 
-                if (item.tag.includes("other") && tag_other_ref.current){
+                if (item.tag.includes("other") && tag_other_ref.current) {
                     tag_other_ref.current.checked = true
                 }
 
-                if (item.tag.includes("...") && tag_custom_ref.current){
+                if (item.tag.includes("...") && tag_custom_ref.current) {
                     tag_custom_ref.current.checked = true
                 }
 
