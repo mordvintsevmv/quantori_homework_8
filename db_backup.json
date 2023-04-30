@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "isChecked": false,
+      "title": "Celebrate my birthday",
+      "tag": "home",
+      "date": "2023-12-12T20:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "isChecked": false,
+      "title": "Buy new eyeglasses",
+      "tag": "health",
+      "date": "2023-07-12T20:00:00.000Z"
+    },
+    {
+      "id": "3",
+      "isChecked": true,
+      "title": "Watch \"Manhattan\" by Woody Allen ",
+      "tag": "other",
+      "date": "2023-02-24T20:00:00.000Z"
+    },
+    {
+      "id": "4",
+      "isChecked": true,
+      "title": "Come up with a new joke",
+      "tag": "other",
+      "date": "2023-04-11T13:53:34.574Z"
+    },
+    {
+      "id": "5",
+      "isChecked": true,
+      "title": "Complete Homework #4",
+      "tag": "work",
+      "date": "2023-04-01T20:00:00.000Z"
+    },
+    {
+      "id": "7",
+      "isChecked": true,
+      "title": "Complete Homework #5",
+      "tag": "work",
+      "date": "2023-04-12T00:00:00.000Z"
+    },
+    {
+      "id": "8",
+      "isChecked": true,
+      "title": "Complete Homework #6",
+      "tag": "work",
+      "date": "2023-04-19T00:00:00.000Z"
+    },
+    {
+      "id": "9",
+      "isChecked": true,
+      "title": "Complete Homework #7",
+      "tag": "work",
+      "date": "2023-04-26T00:00:00.000Z"
+    },
+    {
+      "id": "10",
+      "isChecked": false,
+      "title": "Complete Homework #8",
+      "tag": "work",
+      "date": "2023-05-03T00:00:00.000Z"
+    }
+  ]
+}

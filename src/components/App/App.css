@@ -1,3 +1,155 @@
 .App {
-  text-align: center;
+    margin-bottom: 50px;
+
+    width: 100vw;
+
+    padding: 44px 164px;
+}
+
+.App__header {
+    margin-bottom: 42px;
+}
+
+.App__search {
+    width: calc(100vw - 120px);
+}
+
+.App__controls {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+
+    align-items: center;
+    justify-content: left;
+
+    margin-bottom: 42px;
+    margin-top: 42px;
+
+}
+
+.App__filter-tags {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.App__filter-tag-item{
+    cursor: pointer;
+
+    opacity: 0.4;
+}
+
+.App__filter-tag-item--active{
+    cursor: pointer;
+
+    opacity: 1;
+}
+
+.App__sort{
+    width: 200px;
+}
+
+.App__filters{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.App__list {
+    margin-bottom: 42px;
+}
+
+.App__add-button {
+    min-width: 158px;
+}
+
+.sort{
+    padding-left: 35px;
+
+    cursor: pointer;
+}
+
+.sort--increasing{
+    background-size: 16px 16px;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-image: url("assets/increasing.svg");
+}
+
+.sort--decreasing{
+    background-size: 16px 16px;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-image: url("assets/decreasing.svg");
+}
+
+@media screen and (max-width: 1200px) {
+    .App {
+        margin-bottom: 50px;
+    }
+
+    .App__list {
+        margin-bottom: 20px;
+    }
+
+}
+
+
+@media screen and (max-width: 900px) {
+    .App {
+        margin-bottom: 25px;
+
+        padding: 40px 60px;
+    }
+
+    .App__controls {
+        flex-direction: column;
+        gap: 20px;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    .App__add-button {
+        width: calc(100vw - 120px);
+    }
+
+    .App__search {
+        width: calc(100vw - 120px);
+    }
+
+    .App__list {
+        margin-bottom: 20px;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .App {
+        margin-bottom: 25px;
+
+        padding: 32px 32px;
+    }
+
+    .App__controls {
+        flex-direction: column;
+        gap: 20px;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    .App__add-button {
+        width: calc(100vw - 64px);
+    }
+
+    .App__search {
+        width: calc(100vw - 64px);
+    }
+
+    .App__list {
+        margin-bottom: 20px;
+    }
 }

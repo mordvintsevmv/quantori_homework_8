@@ -22,5 +22,8 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "path": {
+    "crypto": "node_modules/crypto-browserify"
+  }
 }

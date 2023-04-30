@@ -1,3 +1,9 @@
+## ToDo
+
+- [ ] Custom Tag
+- [ ] Fix promise
+- [ ] Refactoring
+
 # Quantori Homework #8
 
 ### React
@@ -10,10 +16,21 @@
 
 ---
 
-**(HW8) ToDo Branch:** <a href="https://quantori-hw8-feature-todo.netlify.app/" target="_blank">Open page</a>
+**(HW8) Simple ToDo Branch:** <a href="https://quantori-hw8-feature-simple.netlify.app/" target="_blank">Open page</a>
 
-**Description:** *ToDo List using React.*
+**Description:** *Simple ToDo List using React.*
 
+
+---
+
+**(HW8) Advanced ToDo Branch:** <a href="https://quantori-hw8-feature-advanced.netlify.app/" target="_blank">Open page</a>
+
+**Description:** *Advanced ToDo List using React.*
+
+- [X] Filter by tag name
+- [X] Multiple tag selection
+- [X] Sort items
+- [X] Edit Items
 
 ---
 

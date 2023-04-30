@@ -1,0 +1,145 @@
+.add-task {
+    width: 524px;
+    height: 371px;
+
+    padding: 24px 32px;
+}
+
+.add-task__title {
+    text-align: center;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+
+    margin-bottom: 38px;
+}
+
+.add-task__input {
+    width: 465px;
+}
+
+.add-task__options {
+    margin-top: 29px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-task__tag-list {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.add-task__date {
+    padding: 10px 16px;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #1D1D1D;
+
+    border: 2px solid rgba(60, 134, 244, 0.6);
+    border-radius: 12px;
+}
+
+.add-task__date:focus {
+    outline: none;
+    border: 2px solid rgba(60, 134, 244, 0.6);
+    border-radius: 12px;
+}
+
+.add-task__buttons {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+
+    bottom: 22px;
+
+}
+
+.add-task__cancel-button {
+    width: 228px;
+}
+
+.add-task__add-button {
+    width: 228px;
+}
+
+@media screen and (max-width: 1200px) {
+    .add-task {
+        width: 500px;
+        padding: 24px 32px;
+    }
+
+    .add-task__input {
+        width: 436px;
+    }
+
+    .add-task__cancel-button {
+        width: 190px;
+    }
+
+    .add-task__add-button {
+        width: 190px;
+    }
+
+}
+
+
+@media screen and (max-width: 900px) {
+    .add-task {
+        width: 400px;
+        padding: 24px 16px;
+    }
+
+    .add-task__input {
+        width: 368px;
+    }
+
+    .add-task__options {
+        flex-direction: column;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .add-task__cancel-button {
+        width: 180px;
+    }
+
+    .add-task__add-button {
+        width: 180px;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .add-task {
+        width: min(400px, calc(100vw - 32px));
+        padding: 24px 16px;
+    }
+
+    .add-task__input {
+        width: min(368px, calc(100vw - 64px));
+    }
+
+
+    .add-task__options {
+        flex-direction: column;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .add-task__cancel-button {
+        width: min(180px, calc((100vw - 64px) / 2));
+    }
+
+    .add-task__add-button {
+        width: min(180px, calc((100vw - 64px) / 2));
+    }
+}

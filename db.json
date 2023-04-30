@@ -1,0 +1,96 @@
+{
+  "items": [
+    {
+      "id": "3b1b66d7-ed44-4740-aa8a-75c8ebb14014",
+      "isChecked": false,
+      "title": "Complete Homework #8",
+      "tag": [
+        "work"
+      ],
+      "date_complete": "2023-05-03",
+      "date_created": "Fri Apr 28 2023 23:59:50 GMT+0400 (Армения, стандартное время)"
+    },
+    {
+      "id": "5cd5db7b-4f33-4a2e-a085-4cad1b07dc7a",
+      "isChecked": false,
+      "title": "Complete Homework #9",
+      "tag": [
+        "work"
+      ],
+      "date_complete": "2023-05-10",
+      "date_created": "Sat Apr 29 2023 00:00:13 GMT+0400 (Армения, стандартное время)"
+    },
+    {
+      "id": "698e35d6-3504-4a5a-a1d2-2cc032ba3438",
+      "isChecked": false,
+      "title": "Complete Homework #10",
+      "tag": [
+        "work"
+      ],
+      "date_complete": "2023-05-17",
+      "date_created": "Sat Apr 29 2023 00:00:50 GMT+0400 (Армения, стандартное время)"
+    },
+    {
+      "id": "691d4cd2-60d5-40a8-be95-18ba7ff4eead",
+      "isChecked": false,
+      "title": "Celebrate my birthday",
+      "tag": [
+        "home"
+      ],
+      "date_complete": "2023-12-13",
+      "date_created": "Sat Apr 29 2023 00:03:04 GMT+0400 (Армения, стандартное время)"
+    },
+    {
+      "id": "f2d74406-23e4-43df-a04a-f797ffb171d8",
+      "isChecked": false,
+      "title": "Buy new eyeglasses",
+      "tag": [
+        "health"
+      ],
+      "date_complete": "2023-09-07",
+      "date_created": "Sat Apr 29 2023 00:03:16 GMT+0400 (Армения, стандартное время)"
+    },
+    {
+      "id": "f63b93e4-8ad1-4e44-a3dc-45635dcce8a0",
+      "isChecked": true,
+      "title": "Watch \"Manhattan\" by Woody Allen",
+      "tag": [
+        "home"
+      ],
+      "date_complete": "2023-01-13",
+      "date_created": "Sat Apr 29 2023 00:03:34 GMT+0400 (Армения, стандартное время)"
+    },
+    {
+      "id": "37b17682-439c-4935-8cbb-e641cec79767",
+      "isChecked": true,
+      "title": "Come up with a new joke",
+      "tag": [
+        "home"
+      ],
+      "date_complete": "2023-02-17",
+      "date_created": "Sun Apr 30 2023 21:20:33 GMT+0400 (Армения, стандартное время)"
+    },
+    {
+      "id": "e8a86b56-4239-43e2-a2f6-94f752f4d015",
+      "isChecked": false,
+      "title": "Do morning exercises",
+      "tag": [
+        "home",
+        "health"
+      ],
+      "date_complete": "2023-05-19",
+      "date_created": "Sun Apr 30 2023 21:23:06 GMT+0400 (Армения, стандартное время)"
+    },
+    {
+      "id": "8e1d4671-30dc-4360-ac82-b3881a1e211b",
+      "isChecked": false,
+      "title": "Find an alternative to JSONbin",
+      "tag": [
+        "work",
+        "other"
+      ],
+      "date_complete": "2023-05-11",
+      "date_created": "Sun Apr 30 2023 21:24:42 GMT+0400 (Армения, стандартное время)"
+    }
+  ]
+}

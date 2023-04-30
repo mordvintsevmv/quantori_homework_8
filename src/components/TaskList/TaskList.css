@@ -1,0 +1,19 @@
+.task-list {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.task-list__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+
+    color: #000000;
+
+    margin-bottom: 24px;
+}
+
+.task-list__items {
+    margin: 12px;
+}
