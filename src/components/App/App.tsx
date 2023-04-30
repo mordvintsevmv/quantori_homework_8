@@ -94,7 +94,10 @@ const App = () => {
     let in_work_items: Item[] = items.filter((item) => !item.isChecked && (item.title.toLowerCase().replace(/\s+/g, '').includes(searchInput.toLowerCase().replace(/\s+/g, '') || '')))
 
     if (filterTags.length > 0) {
-        in_work_items = in_work_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag)))
+        if (filterTags.includes("..."))
+            in_work_items = in_work_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag) || !['home', 'health', "work", "other"].includes(tag)))
+        else
+            in_work_items = in_work_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag)))
     }
 
     switch (sortType) {
@@ -287,8 +290,7 @@ const App = () => {
                       checkItem={checkItem}/>
 
             {!isTodayShown && <Modal closeModal={setTodayShown}
-                                     modal_children={<TodayTasks closeModal={setTodayShown}
-                                                                 items={in_work_items}
+                                     modal_children={<TodayTasks items={in_work_items}
                                                                  setTodayShown={setTodayShown}/>}/>}
 
             {isAddTaskModal &&

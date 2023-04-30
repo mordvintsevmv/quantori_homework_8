@@ -1,12 +1,14 @@
-import {FC} from "react";
+import React, {FC, useRef} from "react";
 import "./TaskTag.css"
 
 interface TaskTagProps {
     name: string,
-    isColored?: boolean
+    isColored?: boolean,
+    isEdit?: boolean
+    ref_input?: React.Ref<HTMLInputElement>
 }
 
-const TaskTag: FC<TaskTagProps> = ({name, isColored = true}) => {
+const TaskTag: FC<TaskTagProps> = ({name, isColored = true, isEdit = false, ref_input}) => {
 
     let tag_color: string = ""
 
@@ -34,10 +36,24 @@ const TaskTag: FC<TaskTagProps> = ({name, isColored = true}) => {
         }
     }
 
+    const handleInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
 
-    return (
-        <div className={`task-tag task-tag--${tag_color}`}>{name}</div>
-    )
+        const target = event.target as HTMLInputElement
+        target.style.width = (target.value.length*6).toString() + "px"
+    }
+
+    if (isEdit){
+        return (
+            <div className={`task-tag task-tag--${tag_color}`}>
+                <input className={"task-tag__input"} type={"text"} placeholder={name} onInput={handleInput} ref={ref_input}/>
+            </div>
+        )
+    }else{
+        return (
+            <div className={`task-tag task-tag--${tag_color}`}>{name}</div>
+        )
+    }
+
 }
 
 export default TaskTag

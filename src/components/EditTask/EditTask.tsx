@@ -19,7 +19,8 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
     const tag_health_ref = useRef<HTMLInputElement>(null)
     const tag_work_ref = useRef<HTMLInputElement>(null)
     const tag_other_ref = useRef<HTMLInputElement>(null)
-    const tag_custom_ref = useRef<HTMLInputElement>(null)
+    const tag_custom_check_ref = useRef<HTMLInputElement>(null)
+    const tag_custom_input_ref = useRef<HTMLInputElement>(null)
 
 
     const {id} = useParams()
@@ -51,8 +52,10 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
                     tag_other_ref.current.checked = true
                 }
 
-                if (item.tag.includes("...") && tag_custom_ref.current) {
-                    tag_custom_ref.current.checked = true
+                if (item.tag.some((tag) => !['home', 'health', "work", "other"].includes(tag)) && tag_custom_check_ref.current && tag_custom_input_ref.current) {
+                    tag_custom_check_ref.current.checked = true
+                    tag_custom_input_ref.current.value = item.tag.filter((tag) => !['home', 'health', "work", "other"].includes(tag))[0]
+                    tag_custom_input_ref.current.style.width = (tag_custom_input_ref.current.value.length * 6).toString() + "px"
                 }
 
 
@@ -79,8 +82,8 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
         if (tag_other_ref.current?.checked) {
             tag.push(tag_other_ref.current.value)
         }
-        if (tag_custom_ref.current?.checked) {
-            tag.push(tag_custom_ref.current.value)
+        if (tag_custom_check_ref.current?.checked && tag_custom_input_ref.current) {
+            tag.push(tag_custom_input_ref.current.value)
         }
 
         if (id)
@@ -93,6 +96,7 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
         navigate(-1)
     }
 
+
     return (
         <div className={"add-task"}>
             <h3 className={"add-task__title"}>Add New Task</h3>
@@ -101,16 +105,16 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
             <div className={"add-task__options"}>
                 <form className={"add-task__tag-list"}>
                     <CustomCheckInput name={'tag'} value={"home"} outline={"#639462"} type={"checkbox"}
-                                      input_element={<TaskTag name={"home"}/>} ref_input={tag_home_ref}/>
+                                      input_element={<TaskTag name={"home"}/>} ref_check={tag_home_ref}/>
                     <CustomCheckInput name={'tag'} value={"health"} outline={"#0053CF"} type={"checkbox"}
-                                      input_element={<TaskTag name={"health"}/>} ref_input={tag_health_ref}/>
+                                      input_element={<TaskTag name={"health"}/>} ref_check={tag_health_ref}/>
                     <CustomCheckInput name={'tag'} value={"work"} outline={"#9747FF"} type={"checkbox"}
-                                      input_element={<TaskTag name={"work"}/>} ref_input={tag_work_ref}/>
+                                      input_element={<TaskTag name={"work"}/>} ref_check={tag_work_ref}/>
                     <CustomCheckInput name={'tag'} value={"other"} outline={"#EA8C00"} type={"checkbox"}
-                                      input_element={<TaskTag name={"other"}/>} ref_input={tag_other_ref}/>
+                                      input_element={<TaskTag name={"other"}/>} ref_check={tag_other_ref}/>
                     <CustomCheckInput name={'tag'} value={"..."} outline={"#EF3F3E"} type={"checkbox"}
-                                      input_element={<TaskTag name={"..."}/>} ref_input={tag_custom_ref}/>
-
+                                      input_element={<TaskTag name={"..."}/>} isEdit={true}
+                                      ref_check={tag_custom_check_ref} ref_input={tag_custom_input_ref}/>
                 </form>
 
                 <input className={"add-task__date"} type={"date"} ref={date_ref}/>
