@@ -3,16 +3,15 @@ import {Item} from "../../types/Item";
 import "./TodayTasks.css"
 
 interface TodayTasksProps {
-    closeModal: () => void,
     setTodayShown: () => void,
     items: Item[]
 }
 
-const TodayTasks: FC<TodayTasksProps> = ({closeModal, setTodayShown, items}) => {
+const TodayTasks: FC<TodayTasksProps> = ({setTodayShown, items}) => {
 
-    const today = new Date()
+    const today: Date = new Date()
 
-    let today_list = items
+    let today_list: JSX.Element[] = items
         // Filtering Today Tasks
         .filter((item: Item): boolean => {
             const parsed_date: Date = new Date(Date.parse(item.date_complete))
@@ -47,11 +46,7 @@ const TodayTasks: FC<TodayTasksProps> = ({closeModal, setTodayShown, items}) => 
                     {today_list}
                 </ul>
             </div>
-            <button className={"button today-tasks__ok-button"} onClick={() => {
-                setTodayShown();
-                closeModal();
-            }}>Ok
-            </button>
+            <button className={"button today-tasks__ok-button"} onClick={setTodayShown}>Ok</button>
 
         </div>
     )

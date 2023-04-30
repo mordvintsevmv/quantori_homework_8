@@ -12,16 +12,16 @@ interface TaskListProps {
 
 const TaskList: FC<TaskListProps> = ({title, items, deleteItem, checkItem}) => {
 
-    const list_items = items
-        .map((item: Item) => <TaskItem item={item} deleteItem={deleteItem} checkItem={checkItem} key={item.id} />);
+    const list_items: JSX.Element[] = items
+        .map((item: Item) => <TaskItem item={item} deleteItem={deleteItem} checkItem={checkItem} key={item.id}/>);
 
-    return(
-    <div className={"task-list"}>
-        <h2 className={"task-list__title"}>{title}</h2>
-        <div className={'task-list__items'}>
-            {list_items}
+    return (
+        <div className={"task-list"}>
+            <h2 className={"task-list__title"}>{title}</h2>
+            <div className={'task-list__items'}>
+                {list_items}
+            </div>
         </div>
-    </div>
     )
 }
 

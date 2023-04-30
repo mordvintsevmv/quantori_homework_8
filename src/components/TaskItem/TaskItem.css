@@ -20,7 +20,7 @@
     will-change: transform;
 }
 
-.task-item__checkbox-img{
+.task-item__checkbox-img {
     width: 21px;
     height: 21px;
 }
@@ -84,7 +84,7 @@
     color: #838383;
 }
 
-.task-item__controls{
+.task-item__controls {
 
     display: flex;
     flex-direction: row;
@@ -93,6 +93,7 @@
     margin-left: auto;
 
 }
+
 .task-item__control-item {
     cursor: pointer;
 
@@ -133,7 +134,7 @@
     }
 }
 
-.task-item--loading{
+.task-item--loading {
     opacity: 0.4;
-    pointer-events:none;
+    pointer-events: none;
 }

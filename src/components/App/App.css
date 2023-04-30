@@ -45,6 +45,12 @@
     opacity: 1;
 }
 
+.App__filter-tag-item--inactive{
+    cursor: pointer;
+
+    opacity: 0.4;
+}
+
 .App__sort{
     width: 220px;
 }

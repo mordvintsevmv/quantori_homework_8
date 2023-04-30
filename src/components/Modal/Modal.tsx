@@ -9,7 +9,9 @@ interface ModalProps {
 const Modal: FC<ModalProps> = ({closeModal, modal_children}) => {
     return (
         <div className={"overlay"} onClick={closeModal}>
-            <div className={"modal"} onClick={(e) => {e.stopPropagation()}}>
+            <div className={"modal"} onClick={(e: React.MouseEvent<HTMLDivElement>): void => {
+                e.stopPropagation()
+            }}>
                 {modal_children}
             </div>
         </div>

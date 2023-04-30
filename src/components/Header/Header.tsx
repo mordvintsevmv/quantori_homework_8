@@ -5,6 +5,7 @@ import WeatherWidget from "../WeatherWidget/WeatherWidget";
 interface HeaderProps {
     title: string
 }
+
 const Header: FC<HeaderProps> = ({title}) => {
     return (
         <div className={"Header"}>

@@ -10,6 +10,7 @@ import {change_API_path, delete_item, load_items, post_item, update_item} from "
 import {Route, Routes, useNavigate} from "react-router-dom";
 import EditTask from "../EditTask/EditTask";
 import Select, {SingleValue} from 'react-select'
+import TaskTag from "../TaskTag/TaskTag";
 
 const isTodayTasksShown = (): boolean => {
 
@@ -94,7 +95,7 @@ const App = () => {
     let in_work_items: Item[] = items.filter((item) => !item.isChecked && (item.title.toLowerCase().replace(/\s+/g, '').includes(searchInput.toLowerCase().replace(/\s+/g, '') || '')))
 
     if (filterTags.length > 0) {
-        if (filterTags.includes("..."))
+        if (filterTags.includes("custom"))
             in_work_items = in_work_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag) || !['home', 'health', "work", "other"].includes(tag)))
         else
             in_work_items = in_work_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag)))
@@ -247,36 +248,26 @@ const App = () => {
 
             <div className={"App__filters"}>
                 <div className={"App__filter-tags"}>
-                    <div
-                        className={`task-tag task-tag--green App__filter-tag-item ${filterTags.includes("home") ? "App__filter-tag-item--active" : null}`}
-                        onClick={() => {
-                            handleFilterTag("home")
-                        }}>home
-                    </div>
-                    <div
-                        className={`task-tag task-tag--blue App__filter-tag-item ${filterTags.includes("health") ? "App__filter-tag-item--active" : null}`}
-                        onClick={() => {
-                            handleFilterTag("health")
-                        }}>health
-                    </div>
-                    <div
-                        className={`task-tag task-tag--purple App__filter-tag-item ${filterTags.includes("work") ? "App__filter-tag-item--active" : null}`}
-                        onClick={() => {
-                            handleFilterTag("work")
-                        }}>work
-                    </div>
-                    <div
-                        className={`task-tag task-tag--orange App__filter-tag-item ${filterTags.includes("other") ? "App__filter-tag-item--active" : null}`}
-                        onClick={() => {
-                            handleFilterTag("other")
-                        }}>other
-                    </div>
-                    <div
-                        className={`task-tag task-tag--red App__filter-tag-item ${filterTags.includes("...") ? "App__filter-tag-item--active" : null}`}
-                        onClick={() => {
-                            handleFilterTag("...")
-                        }}>...
-                    </div>
+                    <button className={filterTags.includes("home") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("home")}}>
+                        <TaskTag name={"home"}/>
+                    </button>
+
+                    <button className={filterTags.includes("health") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("health")}}>
+                        <TaskTag name={"health"}/>
+                    </button>
+
+                    <button className={filterTags.includes("work") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("work")}}>
+                        <TaskTag name={"work"}/>
+                    </button>
+
+                    <button className={filterTags.includes("other") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("other")}}>
+                        <TaskTag name={"other"}/>
+                    </button>
+
+                    <button className={filterTags.includes("custom") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("custom")}}>
+                        <TaskTag name={"custom"}/>
+                    </button>
+
                 </div>
 
                 <Select className={"App__sort"} options={options} onChange={handleSelectChange}
