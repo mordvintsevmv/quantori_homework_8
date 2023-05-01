@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import './App.css';
 import Header from "../Header/Header";
 import TaskList from "../TaskList/TaskList";
@@ -46,16 +46,20 @@ const App = () => {
     const [isAddTaskModal, setIsAddTaskModal] = useState<boolean>(false)
     const [searchInput, setSearchInput] = useState<string>("")
 
+    let in_work_items: Item[] = useMemo(
+        () => items.filter((item) => !item.isChecked && (item.title.toLowerCase().replace(/\s+/g, '').includes(searchInput.toLowerCase().replace(/\s+/g, '') || ''))),
+        [items, searchInput])
 
-    let in_work_items: Item[] = items.filter((item) => !item.isChecked && (item.title.toLowerCase().replace(/\s+/g, '').includes(searchInput.toLowerCase().replace(/\s+/g, '') || '')))
-    const finished_items: Item[] = items.filter((item) => item.isChecked)
+    let finished_items: Item[] = useMemo(
+        () => items.filter((item) => item.isChecked),
+        [items])
 
     const handleTodayShown = (): void => {
         localStorage.setItem('TodayTaskLastShown', JSON.stringify(new Date()))
         setIsTodayShown(true)
     }
 
-    const addItem = async (title: string, tag: string, date: string): Promise<void> => {
+    const addItem = useCallback(async (title: string, tag: string, date: string): Promise<void> => {
 
         await post_item({
             id: crypto.randomUUID(),
@@ -71,10 +75,10 @@ const App = () => {
                     })
             })
             .catch(error => console.error(error))
-    }
+    }, [])
 
 
-    const deleteItem = async (id: string): Promise<void> => {
+    const deleteItem = useCallback(async (id: string): Promise<void> => {
         await delete_item(id)
             .then(async (): Promise<void> => {
                 await load_items()
@@ -84,9 +88,9 @@ const App = () => {
             })
             .catch(error => console.error(error))
 
-    }
+    }, [])
 
-    const checkItem = async (id: string): Promise<void> => {
+    const checkItem = useCallback(async (id: string): Promise<void> => {
 
         const item_index: number = items.findIndex((item: Item): boolean => item.id === id)
 
@@ -98,15 +102,15 @@ const App = () => {
                     })
             })
             .catch(error => console.error(error))
-    }
+    }, [items])
 
     const openModal = (): void => {
         setIsAddTaskModal(true)
     }
 
-    const closeModal = (): void => {
+    const closeModal = useCallback((): void => {
         setIsAddTaskModal(false)
-    }
+    }, [])
 
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, memo} from "react";
 import {Item} from "../../types/Item";
 import "./TaskList.css"
 import TaskItem from "../TaskItem/TaskItem";
@@ -10,7 +10,7 @@ interface TaskListProps {
     checkItem: (id: string) => void,
 }
 
-const TaskList: FC<TaskListProps> = ({title, items, deleteItem, checkItem}) => {
+const TaskList: FC<TaskListProps> = memo(({title, items, deleteItem, checkItem}) => {
 
     const list_items: JSX.Element[] = items
         .map((item: Item) => <TaskItem item={item} deleteItem={deleteItem} checkItem={checkItem} key={item.id}/>);
@@ -23,6 +23,6 @@ const TaskList: FC<TaskListProps> = ({title, items, deleteItem, checkItem}) => {
             </div>
         </div>
     )
-}
+})
 
 export default TaskList
