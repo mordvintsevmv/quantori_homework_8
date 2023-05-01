@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {FC, memo, useState} from "react";
 import {Item} from "../../types/Item";
 import "./TaskItem.css"
 
@@ -19,7 +19,7 @@ interface TaskItemProps {
     checkItem: (id: string) => void
 }
 
-const TaskItem: FC<TaskItemProps> = ({item, deleteItem, checkItem}) => {
+const TaskItem: FC<TaskItemProps> = memo(({item, deleteItem, checkItem}) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -96,6 +96,6 @@ const TaskItem: FC<TaskItemProps> = ({item, deleteItem, checkItem}) => {
             }
         </div>
     )
-}
+})
 
 export default TaskItem

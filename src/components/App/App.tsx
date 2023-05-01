@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import './App.css';
 import Header from "../Header/Header";
 import TaskList from "../TaskList/TaskList";
@@ -55,25 +55,32 @@ const App = () => {
     const navigate = useNavigate()
 
     // Sorting and filtering items
-    let in_work_items: Item[] = items.filter((item) => !item.isChecked && (item.title.toLowerCase().replace(/\s+/g, '').includes(searchInput.toLowerCase().replace(/\s+/g, '') || '')))
+    let in_work_items: Item[] = useMemo(
+        () => {
+            let temp_items = items.filter((item) => !item.isChecked && (item.title.toLowerCase().replace(/\s+/g, '').includes(searchInput.toLowerCase().replace(/\s+/g, '') || '')))
 
-    in_work_items.sort((item1, item2) => sortItems(item1, item2, sortType))
+            if (filterTags.length > 0) {
+                if (filterTags.includes("custom"))
+                    temp_items = temp_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag) || !['home', 'health', "work", "other"].includes(tag)))
+                else
+                    temp_items = temp_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag)))
+            }
 
-    if (filterTags.length > 0) {
-        if (filterTags.includes("custom"))
-            in_work_items = in_work_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag) || !['home', 'health', "work", "other"].includes(tag)))
-        else
-            in_work_items = in_work_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag)))
-    }
+            temp_items.sort((item1, item2) => sortItems(item1, item2, sortType))
 
-    const finished_items: Item[] = items.filter((item) => item.isChecked)
+            return temp_items
+
+        }, [items, searchInput, filterTags, sortType])
+
+
+    const finished_items: Item[] = useMemo(() => items.filter((item) => item.isChecked), [items])
 
     const handleTodayShown = (): void => {
         localStorage.setItem('TodayTaskLastShown', JSON.stringify(new Date()))
         setIsTodayShown(true)
     }
 
-    const addItem = async (title: string, tag: string[], date: string): Promise<void> => {
+    const addItem = useCallback(async (title: string, tag: string[], date: string): Promise<void> => {
 
         await post_item({
             id: crypto.randomUUID(),
@@ -90,10 +97,10 @@ const App = () => {
                     })
             })
             .catch(error => console.error(error))
-    }
+    }, [])
 
 
-    const deleteItem = async (id: string): Promise<void> => {
+    const deleteItem = useCallback(async (id: string): Promise<void> => {
         await delete_item(id)
             .then(async (): Promise<void> => {
                 await load_items()
@@ -103,9 +110,9 @@ const App = () => {
             })
             .catch(error => console.error(error))
 
-    }
+    }, [])
 
-    const checkItem = async (id: string): Promise<void> => {
+    const checkItem = useCallback(async (id: string): Promise<void> => {
 
         const item_index: number = items.findIndex((item: Item): boolean => item.id === id)
 
@@ -117,9 +124,9 @@ const App = () => {
                     })
             })
             .catch(error => console.error(error))
-    }
+    }, [items])
 
-    const editTask = async (id: string, title: string, tag: string[], date: string): Promise<void> => {
+    const editTask = useCallback(async (id: string, title: string, tag: string[], date: string): Promise<void> => {
 
         const item_index: number = items.findIndex((item: Item): boolean => item.id === id)
 
@@ -131,7 +138,7 @@ const App = () => {
                     })
             })
             .catch(error => console.error(error))
-    }
+    }, [items])
 
     const handleFilterTag = (tag: string) => {
         if (filterTags.includes(tag)) {
