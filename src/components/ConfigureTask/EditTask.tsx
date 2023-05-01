@@ -1,9 +1,9 @@
-import {FC, useEffect, useRef} from "react";
-import "../AddTask/AddTask.css"
+import {FC, useEffect, useRef, useState} from "react";
 import CustomCheckInput from "../CustomCheckInput/CustomCheckInput";
 import TaskTag from "../TaskTag/TaskTag";
 import {useNavigate, useParams} from "react-router-dom";
 import {load_item_by_id} from "../../api/itemsAPI";
+import Loading from "../Loading/Loading";
 
 
 interface EditTaskProps {
@@ -25,6 +25,10 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
 
     const {id} = useParams()
     const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+
+    const today = new Date()
+
 
     useEffect(() => {
         if (id) {
@@ -58,6 +62,7 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
                     tag_custom_input_ref.current.style.width = (tag_custom_input_ref.current.value.length * 6).toString() + "px"
                 }
 
+                setIsLoading(false)
 
             })
         }
@@ -65,6 +70,7 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
 
 
     const editTaskHandler = () => {
+        setIsLoading(true)
         const title = title_ref.current?.value || ""
         const date = date_ref.current?.value || ""
 
@@ -98,12 +104,12 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
 
 
     return (
-        <div className={"add-task"}>
-            <h3 className={"add-task__title"}>Add New Task</h3>
-            <input placeholder={"Task Title"} className={"text-input add-task__input"} ref={title_ref}></input>
+        <div className={`configure-task ${isLoading ? "configure-task--loading" : null}`}>
+            <h3 className={"configure-task__title"}>Edit Task</h3>
+            <input placeholder={"Task Title"} className={"text-input configure-task__input"} ref={title_ref}></input>
 
-            <div className={"add-task__options"}>
-                <form className={"add-task__tag-list"}>
+            <div className={"configure-task__options"}>
+                <form className={"configure-task__tag-list"}>
                     <CustomCheckInput name={'tag'} value={"home"} outline={"#639462"} type={"checkbox"}
                                       input_element={<TaskTag name={"home"}/>} ref_check={tag_home_ref}/>
                     <CustomCheckInput name={'tag'} value={"health"} outline={"#0053CF"} type={"checkbox"}
@@ -111,21 +117,25 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
                     <CustomCheckInput name={'tag'} value={"work"} outline={"#9747FF"} type={"checkbox"}
                                       input_element={<TaskTag name={"work"}/>} ref_check={tag_work_ref}/>
                     <CustomCheckInput name={'tag'} value={"other"} outline={"#EA8C00"} type={"checkbox"}
-                                      input_element={<TaskTag name={"other"}/>} ref_check={tag_other_ref}/>
+                                      isDefault={true} input_element={<TaskTag name={"other"}/>}
+                                      ref_check={tag_other_ref}/>
                     <CustomCheckInput name={'tag'} value={"..."} outline={"#EF3F3E"} type={"checkbox"}
-                                      input_element={<TaskTag name={"..."}/>} isEdit={true}
-                                      ref_check={tag_custom_check_ref} ref_input={tag_custom_input_ref}/>
+                                      input_element={<TaskTag name={"..."}/>} ref_check={tag_custom_check_ref}
+                                      ref_input={tag_custom_input_ref} isEdit={true}/>
                 </form>
 
-                <input className={"add-task__date"} type={"date"} ref={date_ref}/>
+                <input className={"configure-task__date"} type={"date"} ref={date_ref}
+                       defaultValue={`${today.toLocaleDateString('en-CA')}`}/>
             </div>
 
-            <div className={"add-task__buttons"}>
-                <button className={"button button--isTransparent add-task__cancel-button"}
-                        onClick={handleClose}>Cancel
+            <div className={"configure-task__buttons"}>
+                <button className={"button button--isTransparent configure-task__cancel-button"} onClick={handleClose}>Cancel
                 </button>
-                <button className={"button add-task__add-button"} onClick={editTaskHandler}>Edit Task</button>
+                <button className={"button configure-task__ok-button"} onClick={editTaskHandler}>Edit Task</button>
             </div>
+
+            {isLoading ? <Loading/> : null}
+
         </div>
     )
 }

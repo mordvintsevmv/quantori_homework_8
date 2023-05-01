@@ -1,19 +1,10 @@
 import {FC, useEffect, useState} from "react";
 import "./WeatherWidget.css"
-import {getWeather} from "../../api/weatherAPI";
+import {getCurrentPosition, getWeather} from "../../api/weatherAPI";
 import {WeatherResponse} from "../../types/WeatherResponse";
 import {WeatherState} from "../../types/State";
 
 import error_img from "./assets/error.svg"
-
-const getCurrentPosition = async (): Promise<string> => {
-    return new Promise((resolve): void => {
-        navigator.geolocation.getCurrentPosition(
-            (position: GeolocationPosition) => resolve(position.coords.latitude + ',' + position.coords.longitude),
-            () => resolve('Tbilisi')
-        )
-    })
-}
 
 const WeatherWidget: FC = () => {
 

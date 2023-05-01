@@ -4,13 +4,14 @@ import Header from "../Header/Header";
 import TaskList from "../TaskList/TaskList";
 import {Item} from "../../types/Item";
 import Modal from "../Modal/Modal";
-import AddTask from "../AddTask/AddTask";
+import AddTask from "../ConfigureTask/AddTask";
 import TodayTasks from "../TodayTasks/TodayTasks";
 import {change_API_path, delete_item, load_items, post_item, update_item} from "../../api/itemsAPI";
-import {Route, Routes, useNavigate} from "react-router-dom";
-import EditTask from "../EditTask/EditTask";
+import {Link, Route, Routes, useNavigate} from "react-router-dom";
+import EditTask from "../ConfigureTask/EditTask";
 import Select, {SingleValue} from 'react-select'
 import TaskTag from "../TaskTag/TaskTag";
+import {sortItems, SortType} from "../../commonScripts/item_sorting";
 
 const isTodayTasksShown = (): boolean => {
 
@@ -46,53 +47,17 @@ const App = () => {
 
     const [items, setItems] = useState<Item[]>([])
 
-    const [isAddTaskModal, setIsAddTaskModal] = useState<boolean>(false)
-    const [isTodayShown, setIsTodayShown] = useState<boolean>(isTodayTasksShown())
+    const [isTodayShown, setIsTodayShown] = useState<boolean>(true)
     const [searchInput, setSearchInput] = useState<string>("")
     const [filterTags, setFilterTags] = useState<string[]>([])
-    const [sortType, setSortType] = useState<string>("sort-date-create-decreasing")
+    const [sortType, setSortType] = useState<SortType>(SortType.DATE_CREATE_DECREASING)
 
-    useEffect(() => {
+    const navigate = useNavigate()
 
-        fetch('http://localhost:3004/items')
-            .catch(() => change_API_path())
-            .finally(() => load_items().then((response: Item[]) => {
-                setItems(response)
-            }))
-
-    }, [])
-
-    const dateCreatedSort = (item1: Item, item2: Item, type: string = "decreasing"): number => {
-        const date1 = new Date(item1.date_created)
-        const date2 = new Date(item2.date_created)
-
-        if (type === "decreasing") {
-            return +date2 - +date1
-        } else {
-            return +date1 - +date2
-        }
-    }
-
-    const dateCompleteSort = (item1: Item, item2: Item, type: string = "decreasing"): number => {
-        const date1 = new Date(item1.date_complete)
-        const date2 = new Date(item2.date_complete)
-
-        if (type === "decreasing") {
-            return +date2 - +date1
-        } else {
-            return +date1 - +date2
-        }
-    }
-
-    const titleSort = (item1: Item, item2: Item, type: string = "decreasing") => {
-        if (type === "decreasing") {
-            return item2.title.localeCompare(item1.title)
-        } else {
-            return item1.title.localeCompare(item2.title)
-        }
-    }
-
+    // Sorting and filtering items
     let in_work_items: Item[] = items.filter((item) => !item.isChecked && (item.title.toLowerCase().replace(/\s+/g, '').includes(searchInput.toLowerCase().replace(/\s+/g, '') || '')))
+
+    in_work_items.sort((item1, item2) => sortItems(item1, item2, sortType))
 
     if (filterTags.length > 0) {
         if (filterTags.includes("custom"))
@@ -101,44 +66,12 @@ const App = () => {
             in_work_items = in_work_items.filter((item) => item.tag.some((tag) => filterTags.includes(tag)))
     }
 
-    switch (sortType) {
-        case "sort-title-decreasing":
-            in_work_items = in_work_items.sort((item1, item2) => titleSort(item1, item2, "decreasing"));
-            break;
-        case "sort-title-increasing":
-            in_work_items = in_work_items.sort((item1, item2) => titleSort(item1, item2, "increasing"));
-            break;
-        case "sort-date-complete-decreasing":
-            in_work_items = in_work_items.sort((item1, item2) => dateCompleteSort(item1, item2, "decreasing"));
-            break;
-        case "sort-date-complete-increasing":
-            in_work_items = in_work_items.sort((item1, item2) => dateCompleteSort(item1, item2, "increasing"));
-            break;
-        case "sort-date-create-increasing":
-            in_work_items = in_work_items.sort((item1, item2) => dateCreatedSort(item1, item2, "increasing"));
-            break;
-        case "sort-date-create-decreasing":
-        default:
-            in_work_items = in_work_items.sort((item1, item2) => dateCreatedSort(item1, item2, "decreasing"));
-            break;
-
-    }
     const finished_items: Item[] = items.filter((item) => item.isChecked)
 
-
-    const openModal = (): void => {
-        setIsAddTaskModal(true)
-    }
-
-    const closeModal = (): void => {
-        setIsAddTaskModal(false)
-    }
-
-    const setTodayShown = (): void => {
+    const handleTodayShown = (): void => {
         localStorage.setItem('TodayTaskLastShown', JSON.stringify(new Date()))
         setIsTodayShown(true)
     }
-
 
     const addItem = async (title: string, tag: string[], date: string): Promise<void> => {
 
@@ -154,7 +87,6 @@ const App = () => {
                 await load_items()
                     .then((items: Item[]): void => {
                         setItems(items);
-                        setIsAddTaskModal(false)
                     })
             })
             .catch(error => console.error(error))
@@ -167,7 +99,6 @@ const App = () => {
                 await load_items()
                     .then((items: Item[]): void => {
                         setItems(items);
-                        setIsAddTaskModal(false)
                     })
             })
             .catch(error => console.error(error))
@@ -183,7 +114,6 @@ const App = () => {
                 await load_items()
                     .then((items: Item[]): void => {
                         setItems(items);
-                        setIsAddTaskModal(false)
                     })
             })
             .catch(error => console.error(error))
@@ -203,9 +133,6 @@ const App = () => {
             .catch(error => console.error(error))
     }
 
-
-    const navigate = useNavigate()
-
     const handleFilterTag = (tag: string) => {
         if (filterTags.includes(tag)) {
             setFilterTags(filterTags.filter((filter_tag) => filter_tag !== tag))
@@ -215,23 +142,33 @@ const App = () => {
     }
 
     interface SortOptions {
-        value: string,
+        value: SortType,
         label: JSX.Element
     }
 
     const options: SortOptions[] = [
-        {value: 'sort-date-create-increasing', label: <div className={"sort sort--increasing"}>Date Created</div>},
-        {value: 'sort-date-create-decreasing', label: <div className={"sort sort--decreasing"}>Date Created</div>},
-        {value: 'sort-date-complete-increasing', label: <div className={"sort sort--increasing"}>Date Complete</div>},
-        {value: 'sort-date-complete-decreasing', label: <div className={"sort sort--decreasing"}>Date Complete</div>},
-        {value: 'sort-title-increasing', label: <div className={"sort sort--increasing"}>Title</div>},
-        {value: 'sort-title-decreasing', label: <div className={"sort sort--decreasing"}>Title</div>},
+        {value: SortType.DATE_CREATE_INCREASING, label: <div className={"sort sort--increasing"}>Date Created</div>},
+        {value: SortType.DATE_CREATE_DECREASING, label: <div className={"sort sort--decreasing"}>Date Created</div>},
+        {value: SortType.DATE_COMPLETE_INCREASING, label: <div className={"sort sort--increasing"}>Date Complete</div>},
+        {value: SortType.DATE_COMPLETE_DECREASING, label: <div className={"sort sort--decreasing"}>Date Complete</div>},
+        {value: SortType.TITLE_INCREASING, label: <div className={"sort sort--increasing"}>Title</div>},
+        {value: SortType.TITLE_DECREASING, label: <div className={"sort sort--decreasing"}>Title</div>},
     ]
 
     const handleSelectChange = (selectedOption: SingleValue<SortOptions>) => {
         if (selectedOption)
             setSortType(selectedOption.value)
     }
+
+    useEffect(() => {
+
+        fetch('http://localhost:3004/items')
+            .catch(() => change_API_path())
+            .finally(() => load_items().then((response: Item[]) => {
+                setItems(response)
+                setIsTodayShown(isTodayTasksShown())
+            }))
+    }, [])
 
     return (
         <div className="App">
@@ -243,28 +180,54 @@ const App = () => {
                        value={searchInput} onChange={(event) => {
                     setSearchInput(event.target.value)
                 }}/>
-                <button className={"button App__add-button"} onClick={openModal}>+ New Task</button>
+
+                <Link to={"/add-task"}>
+                    <button className={"button App__add-button"}>
+                        + New Task
+                    </button>
+                </Link>
+
             </div>
 
             <div className={"App__filters"}>
                 <div className={"App__filter-tags"}>
-                    <button className={filterTags.includes("home") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("home")}}>
+                    <button
+                        className={filterTags.includes("home") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"}
+                        onClick={() => {
+                            handleFilterTag("home")
+                        }}>
                         <TaskTag name={"home"}/>
                     </button>
 
-                    <button className={filterTags.includes("health") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("health")}}>
+                    <button
+                        className={filterTags.includes("health") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"}
+                        onClick={() => {
+                            handleFilterTag("health")
+                        }}>
                         <TaskTag name={"health"}/>
                     </button>
 
-                    <button className={filterTags.includes("work") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("work")}}>
+                    <button
+                        className={filterTags.includes("work") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"}
+                        onClick={() => {
+                            handleFilterTag("work")
+                        }}>
                         <TaskTag name={"work"}/>
                     </button>
 
-                    <button className={filterTags.includes("other") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("other")}}>
+                    <button
+                        className={filterTags.includes("other") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"}
+                        onClick={() => {
+                            handleFilterTag("other")
+                        }}>
                         <TaskTag name={"other"}/>
                     </button>
 
-                    <button className={filterTags.includes("custom") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"} onClick={()=>{handleFilterTag("custom")}}>
+                    <button
+                        className={filterTags.includes("custom") ? "App__filter-tag-item--active" : "App__filter-tag-item--inactive"}
+                        onClick={() => {
+                            handleFilterTag("custom")
+                        }}>
                         <TaskTag name={"custom"}/>
                     </button>
 
@@ -280,15 +243,14 @@ const App = () => {
             <TaskList title={"Completed Tasks"} items={finished_items} deleteItem={deleteItem}
                       checkItem={checkItem}/>
 
-            {!isTodayShown && <Modal closeModal={setTodayShown}
+            {!isTodayShown && <Modal closeModal={handleTodayShown}
                                      modal_children={<TodayTasks items={in_work_items}
-                                                                 setTodayShown={setTodayShown}/>}/>}
-
-            {isAddTaskModal &&
-                <Modal closeModal={closeModal}
-                       modal_children={<AddTask closeModal={closeModal} addTask={addItem}/>}/>}
+                                                                 setTodayShown={handleTodayShown}/>}/>}
 
             <Routes>
+
+                <Route path={"/add-task"} element={<Modal closeModal={() => navigate(-1)}
+                                                          modal_children={<AddTask addTask={addItem}/>}/>}/>
 
                 <Route path={"/edit/:id"} element={<Modal closeModal={() => navigate(-1)}
                                                           modal_children={<EditTask editTask={editTask}/>}/>}/>

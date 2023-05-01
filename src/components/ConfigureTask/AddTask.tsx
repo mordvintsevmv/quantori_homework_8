@@ -1,14 +1,15 @@
-import {FC, useRef} from "react";
-import "./AddTask.css"
+import {FC, useRef, useState} from "react";
 import CustomCheckInput from "../CustomCheckInput/CustomCheckInput";
 import TaskTag from "../TaskTag/TaskTag";
+import Loading from "../Loading/Loading";
+import "./ConfigureTask.css"
+import {useNavigate} from "react-router-dom";
 
 interface AddTaskProps {
-    closeModal: () => void,
-    addTask: (title: string, tag: string[], date: string) => void
+    addTask: (title: string, tag: string[], date: string) => void,
 }
 
-const AddTask: FC<AddTaskProps> = ({closeModal, addTask}) => {
+const AddTask: FC<AddTaskProps> = ({addTask}) => {
 
     const title_ref = useRef<HTMLInputElement>(null)
     const date_ref = useRef<HTMLInputElement>(null)
@@ -20,9 +21,14 @@ const AddTask: FC<AddTaskProps> = ({closeModal, addTask}) => {
     const tag_custom_check_ref = useRef<HTMLInputElement>(null)
     const tag_custom_input_ref = useRef<HTMLInputElement>(null)
 
-    const today: Date = new Date()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const navigate = useNavigate()
+
+    const today = new Date()
 
     const addTaskHandler = () => {
+        setIsLoading(true)
         const title = title_ref.current?.value || ""
         const date = date_ref.current?.value || ""
 
@@ -45,14 +51,21 @@ const AddTask: FC<AddTaskProps> = ({closeModal, addTask}) => {
         }
 
         addTask(title, tag, date)
+        navigate(-1)
     }
-    return (
-        <div className={"add-task"}>
-            <h3 className={"add-task__title"}>Add New Task</h3>
-            <input placeholder={"Task Title"} className={"text-input add-task__input"} ref={title_ref}></input>
 
-            <div className={"add-task__options"}>
-                <form className={"add-task__tag-list"}>
+    const handleClose = () => {
+        navigate(-1)
+    }
+
+
+    return (
+        <div className={`configure-task ${isLoading ? "configure-task--loading" : null}`}>
+            <h3 className={"configure-task__title"}>Add Task</h3>
+            <input placeholder={"Task Title"} className={"text-input configure-task__input"} ref={title_ref}></input>
+
+            <div className={"configure-task__options"}>
+                <form className={"configure-task__tag-list"}>
                     <CustomCheckInput name={'tag'} value={"home"} outline={"#639462"} type={"checkbox"}
                                       input_element={<TaskTag name={"home"}/>} ref_check={tag_home_ref}/>
                     <CustomCheckInput name={'tag'} value={"health"} outline={"#0053CF"} type={"checkbox"}
@@ -67,15 +80,19 @@ const AddTask: FC<AddTaskProps> = ({closeModal, addTask}) => {
                                       ref_input={tag_custom_input_ref} isEdit={true}/>
                 </form>
 
-                <input className={"add-task__date"} type={"date"} ref={date_ref}
+                <input className={"configure-task__date"} type={"date"} ref={date_ref}
                        defaultValue={`${today.toLocaleDateString('en-CA')}`}/>
             </div>
 
-            <div className={"add-task__buttons"}>
-                <button className={"button button--isTransparent add-task__cancel-button"} onClick={closeModal}>Cancel
+            <div className={"configure-task__buttons"}>
+                <button className={"button button--isTransparent configure-task__cancel-button"}
+                        onClick={handleClose}>Cancel
                 </button>
-                <button className={"button add-task__add-button"} onClick={addTaskHandler}>Add Task</button>
+                <button className={"button configure-task__ok-button"} onClick={addTaskHandler}>Add Task</button>
             </div>
+
+            {isLoading ? <Loading/> : null}
+
         </div>
     )
 }
