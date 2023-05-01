@@ -1,3 +1,105 @@
 .App {
-  text-align: center;
+    margin-bottom: 50px;
+
+    width: 100vw;
+
+    padding: 44px 164px;
+}
+
+.App__header {
+    margin-bottom: 42px;
+}
+
+.App__search {
+    width: calc(100vw - 120px);
+}
+
+.App__controls {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+
+    align-items: center;
+    justify-content: left;
+
+    margin-bottom: 42px;
+    margin-top: 42px;
+
+}
+
+.App__list {
+    margin-bottom: 42px;
+}
+
+.App__add-button {
+    min-width: 158px;
+}
+
+@media screen and (max-width: 1200px) {
+    .App {
+        margin-bottom: 50px;
+    }
+
+    .App__list {
+        margin-bottom: 20px;
+    }
+
+}
+
+
+@media screen and (max-width: 900px) {
+    .App {
+        margin-bottom: 25px;
+
+        padding: 40px 60px;
+    }
+
+    .App__controls {
+        flex-direction: column;
+        gap: 20px;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    .App__add-button {
+        width: calc(100vw - 120px);
+    }
+
+    .App__search {
+        width: calc(100vw - 120px);
+    }
+
+    .App__list {
+        margin-bottom: 20px;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .App {
+        margin-bottom: 25px;
+
+        padding: 32px 32px;
+    }
+
+    .App__controls {
+        flex-direction: column;
+        gap: 20px;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    .App__add-button {
+        width: calc(100vw - 64px);
+    }
+
+    .App__search {
+        width: calc(100vw - 64px);
+    }
+
+    .App__list {
+        margin-bottom: 20px;
+    }
 }

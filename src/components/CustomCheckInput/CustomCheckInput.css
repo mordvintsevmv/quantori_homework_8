@@ -1,0 +1,13 @@
+.custom-check-input {
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.custom-check-input__input {
+    display: none;
+}
+
+.custom-check-input:has(.custom-check-input__input:checked) {
+    border: 1px solid;
+}
+
