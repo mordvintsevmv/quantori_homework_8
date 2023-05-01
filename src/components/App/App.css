@@ -33,29 +33,29 @@
     gap: 8px;
 }
 
-.App__filter-tag-item{
+.App__filter-tag-item {
     cursor: pointer;
 
     opacity: 0.4;
 }
 
-.App__filter-tag-item--active{
+.App__filter-tag-item--active {
     cursor: pointer;
 
     opacity: 1;
 }
 
-.App__filter-tag-item--inactive{
+.App__filter-tag-item--inactive {
     cursor: pointer;
 
     opacity: 0.4;
 }
 
-.App__sort{
+.App__sort {
     width: 220px;
 }
 
-.App__filters{
+.App__filters {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -71,20 +71,20 @@
     min-width: 158px;
 }
 
-.sort{
+.sort {
     padding-left: 35px;
 
     cursor: pointer;
 }
 
-.sort--increasing{
+.sort--increasing {
     background-size: 16px 16px;
     background-position: left;
     background-repeat: no-repeat;
     background-image: url("assets/increasing.svg");
 }
 
-.sort--decreasing{
+.sort--decreasing {
     background-size: 16px 16px;
     background-position: left;
     background-repeat: no-repeat;
@@ -118,11 +118,23 @@
         justify-content: center;
     }
 
+    .App__filters {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
     .App__add-button {
         width: calc(100vw - 120px);
     }
 
     .App__search {
+        width: calc(100vw - 120px);
+    }
+
+    .App__sort {
         width: calc(100vw - 120px);
     }
 
@@ -147,11 +159,24 @@
         justify-content: center;
     }
 
+    .App__filters {
+        flex-direction: column;
+        gap: 30px;
+
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+
     .App__add-button {
         width: calc(100vw - 64px);
     }
 
     .App__search {
+        width: calc(100vw - 64px);
+    }
+
+    .App__sort {
         width: calc(100vw - 64px);
     }
 
