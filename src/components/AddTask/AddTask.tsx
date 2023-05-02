@@ -11,7 +11,6 @@ interface AddTaskProps {
 
 const AddTask: FC<AddTaskProps> = ({addTask, closeModal}) => {
 
-    const title_ref = useRef<HTMLInputElement>(null)
     const date_ref = useRef<HTMLInputElement>(null)
 
     const tag_home_ref = useRef<HTMLInputElement>(null)
@@ -20,12 +19,13 @@ const AddTask: FC<AddTaskProps> = ({addTask, closeModal}) => {
     const tag_other_ref = useRef<HTMLInputElement>(null)
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [titleState, setTitleState] = useState<string>("")
 
     const today = new Date()
 
     const addTaskHandler = () => {
         setIsLoading(true)
-        const title = title_ref.current?.value || ""
+        const title = titleState
         const date = date_ref.current?.value || ""
 
         let tag: string = ""
@@ -47,11 +47,18 @@ const AddTask: FC<AddTaskProps> = ({addTask, closeModal}) => {
         closeModal()
     }
 
+    const handleTitleChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        const target = event.target as HTMLInputElement
+
+        setTitleState(target.value)
+    }
+
 
     return (
         <div className={`add-task ${isLoading ? "add-task--loading" : null}`}>
             <h3 className={"add-task__title"}>Add Task</h3>
-            <input placeholder={"Task Title"} className={"text-input add-task__input"} ref={title_ref}></input>
+            <input placeholder={"Task Title"} className={"text-input add-task__input"} type={"text"} value={titleState}
+                   onInput={handleTitleChange}></input>
 
             <div className={"add-task__options"}>
                 <form className={"add-task__tag-list"}>
@@ -74,7 +81,9 @@ const AddTask: FC<AddTaskProps> = ({addTask, closeModal}) => {
                 <button className={"button button--isTransparent add-task__cancel-button"}
                         onClick={closeModal}>Cancel
                 </button>
-                <button className={"button add-task__ok-button"} onClick={addTaskHandler}>Add Task</button>
+                <button className={"button add-task__ok-button"} onClick={addTaskHandler}
+                        disabled={titleState.length < 1}>Add Task
+                </button>
             </div>
 
             {isLoading ? <Loading/> : null}
