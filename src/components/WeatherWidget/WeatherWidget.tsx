@@ -35,7 +35,6 @@ const WeatherWidget: FC = () => {
                         setIsLoading(false)
                     })
             })
-
     }, [])
 
     return (

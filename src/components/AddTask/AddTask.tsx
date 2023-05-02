@@ -1,4 +1,4 @@
-import {FC, useRef, useState} from "react";
+import React, {FC, useRef, useState} from "react";
 import CustomCheckInput from "../CustomCheckInput/CustomCheckInput";
 import TaskTag from "../TaskTag/TaskTag";
 import Loading from "../Loading/Loading";
@@ -52,7 +52,6 @@ const AddTask: FC<AddTaskProps> = ({addTask, closeModal}) => {
 
         setTitleState(target.value)
     }
-
 
     return (
         <div className={`add-task ${isLoading ? "add-task--loading" : null}`}>

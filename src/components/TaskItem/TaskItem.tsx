@@ -17,14 +17,13 @@ interface TaskItemProps {
     checkItem: (id: string) => void
 }
 
-const TaskItem: FC<TaskItemProps> = memo( ({item, deleteItem, checkItem}) => {
+const TaskItem: FC<TaskItemProps> = memo(({item, deleteItem, checkItem}) => {
 
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     // Parsing date (for situations when there is string instead of Date)
     const parsed_date: Date = new Date(Date.parse(item.date))
-
     const today: Date = new Date();
 
     // Creating text for date
@@ -49,13 +48,20 @@ const TaskItem: FC<TaskItemProps> = memo( ({item, deleteItem, checkItem}) => {
         day_text = `${day_array[parsed_date.getDay()]}, ${parsed_date.getDate()} ${month_array[parsed_date.getMonth()]}`
     }
 
+    const handleCheck = () => {
+        setIsLoading(true);
+        checkItem(item.id)
+    }
+
+    const handleDelete = () => {
+        setIsLoading(true);
+        deleteItem(item.id)
+    }
+
     return (
         <div className={`task-item ${isLoading ? "task-item--loading" : null}`}>
 
-            <button className={"task-item__checkbox"} onClick={() => {
-                setIsLoading(true);
-                checkItem(item.id)
-            }}>
+            <button className={"task-item__checkbox"} onClick={handleCheck}>
                 <img
                     className={item.isChecked ? "task-item__checkbox-img task-item__checkbox-img--checked" : "task-item__checkbox-img task-item__checkbox-img--unchecked"}
                     src={item.isChecked ? checkbox_disabled_icon : checkbox_unchecked_icon}
@@ -73,11 +79,7 @@ const TaskItem: FC<TaskItemProps> = memo( ({item, deleteItem, checkItem}) => {
 
             {!item.isChecked &&
                 <div className={"task-item__controls"}>
-
-                    <button className={"task-item__control-item"} onClick={() => {
-                        setIsLoading(true);
-                        deleteItem(item.id)
-                    }}>
+                    <button className={"task-item__control-item"} onClick={handleDelete}>
                         <img src={trash_icon} alt={"Delete"}/>
                     </button>
                 </div>

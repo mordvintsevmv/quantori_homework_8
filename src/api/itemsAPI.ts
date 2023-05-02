@@ -3,7 +3,6 @@ import {Item} from "../types/Item";
 
 let serverAPI = dataFetch('http://localhost:3004')
 
-// Functions for localhost server
 export let load_items = async (): Promise<Item[]> => {
     return await serverAPI<Item[]>('items_simple');
 }
