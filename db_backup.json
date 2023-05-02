@@ -1,5 +1,5 @@
 {
-  "items": [
+  "items_simple": [
     {
       "id": "4cbf5652-c7d7-441a-87e4-a1c4cdb6a88c",
       "isChecked": false,
@@ -37,7 +37,7 @@
     },
     {
       "id": "8e1d4671-30dc-4360-ac82-b3881a1e211b",
-      "isChecked": false,
+      "isChecked": true,
       "title": "Find an alternative to JSONbin",
       "tag": "work",
       "date": "2023-05-11"
