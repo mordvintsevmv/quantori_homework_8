@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from "react";
 import CustomCheckInput from "../CustomCheckInput/CustomCheckInput";
-import TaskTag from "../TaskTag/TaskTag";
 import {useNavigate, useParams} from "react-router-dom";
 import {load_item_by_id} from "../../api/itemsAPI";
 import Loading from "../Loading/Loading";
@@ -12,7 +11,6 @@ interface EditTaskProps {
 
 const EditTask: FC<EditTaskProps> = ({editTask}) => {
 
-    const title_ref = useRef<HTMLInputElement>(null)
     const date_ref = useRef<HTMLInputElement>(null)
 
     const tag_home_ref = useRef<HTMLInputElement>(null)
@@ -111,21 +109,22 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
     return (
         <div className={`configure-task ${isLoading ? "configure-task--loading" : null}`}>
             <h3 className={"configure-task__title"}>Edit Task</h3>
-            <input placeholder={"Task Title"} className={"text-input configure-task__input"} type={"text"} value={titleState} onInput={handleTitleChange} ></input>
+            <input placeholder={"Task Title"} className={"text-input configure-task__input"} type={"text"}
+                   value={titleState} onInput={handleTitleChange}></input>
 
             <div className={"configure-task__options"}>
                 <form className={"configure-task__tag-list"}>
                     <CustomCheckInput name={'tag'} value={"home"} outline={"#639462"} type={"checkbox"}
-                                      input_element={<TaskTag name={"home"}/>} ref_check={tag_home_ref}/>
+                                      ref_check={tag_home_ref}/>
                     <CustomCheckInput name={'tag'} value={"health"} outline={"#0053CF"} type={"checkbox"}
-                                      input_element={<TaskTag name={"health"}/>} ref_check={tag_health_ref}/>
+                                      ref_check={tag_health_ref}/>
                     <CustomCheckInput name={'tag'} value={"work"} outline={"#9747FF"} type={"checkbox"}
-                                      input_element={<TaskTag name={"work"}/>} ref_check={tag_work_ref}/>
+                                      ref_check={tag_work_ref}/>
                     <CustomCheckInput name={'tag'} value={"other"} outline={"#EA8C00"} type={"checkbox"}
-                                      isDefault={true} input_element={<TaskTag name={"other"}/>}
+                                      isDefault={true}
                                       ref_check={tag_other_ref}/>
                     <CustomCheckInput name={'tag'} value={"..."} outline={"#EF3F3E"} type={"checkbox"}
-                                      input_element={<TaskTag name={"..."}/>} ref_check={tag_custom_check_ref}
+                                      ref_check={tag_custom_check_ref}
                                       ref_input={tag_custom_input_ref} isEdit={true}/>
                 </form>
 
@@ -134,9 +133,12 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
             </div>
 
             <div className={"configure-task__buttons"}>
-                <button className={"button button--isTransparent configure-task__cancel-button"} onClick={handleClose}>Cancel
+                <button className={"button button--isTransparent configure-task__cancel-button"}
+                        onClick={handleClose}>Cancel
                 </button>
-                <button className={"button configure-task__ok-button"} onClick={editTaskHandler} disabled={titleState.length < 1}>Edit Task</button>
+                <button className={"button configure-task__ok-button"} onClick={editTaskHandler}
+                        disabled={titleState.length < 1}>Edit Task
+                </button>
             </div>
 
             {isLoading ? <Loading/> : null}

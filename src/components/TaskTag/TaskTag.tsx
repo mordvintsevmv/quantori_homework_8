@@ -37,7 +37,6 @@ const TaskTag: FC<TaskTagProps> = ({name, isColored = true, isEdit = false, ref_
     }
 
     const handleInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
-
         const target = event.target as HTMLInputElement
         target.style.width = (target.value.length * 6).toString() + "px"
     }
@@ -54,7 +53,6 @@ const TaskTag: FC<TaskTagProps> = ({name, isColored = true, isEdit = false, ref_
             <div className={`task-tag task-tag--${tag_color}`}>{name}</div>
         )
     }
-
 }
 
 export default TaskTag

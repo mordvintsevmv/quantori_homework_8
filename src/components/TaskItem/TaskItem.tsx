@@ -25,7 +25,6 @@ const TaskItem: FC<TaskItemProps> = memo(({item, deleteItem, checkItem}) => {
 
     // Parsing date (for situations when there is string instead of Date)
     const parsed_date: Date = new Date(Date.parse(item.date_complete))
-
     const today: Date = new Date();
 
     // Creating text for date
@@ -53,15 +52,22 @@ const TaskItem: FC<TaskItemProps> = memo(({item, deleteItem, checkItem}) => {
     const tags: JSX.Element[] = item.tag.map((tag: string) => <TaskTag name={tag} key={tag}
                                                                        isColored={!item.isChecked}/>)
 
+    const handleCheck = () => {
+        setIsLoading(true);
+        checkItem(item.id)
+    }
+
+    const handleDelete = () => {
+        setIsLoading(true);
+        deleteItem(item.id)
+    }
+
     return (
         <div className={`task-item ${isLoading ? "task-item--loading" : null}`}>
 
-            <button className={"task-item__checkbox"} onClick={() => {
-                setIsLoading(true);
-                checkItem(item.id)
-            }}>
+            <button className={"task-item__checkbox"} onClick={handleCheck}>
                 <img
-                    className={item.isChecked ? "task-item__checkbox-img task-item__checkbox-img--checked" : "task-item__checkbox-img task-item__checkbox-img--unchecked"}
+                    className={`task-item__checkbox-img ${item.isChecked ? "task-item__checkbox-img--checked" : "task-item__checkbox-img--unchecked"}`}
                     src={item.isChecked ? checkbox_disabled_icon : checkbox_unchecked_icon}
                     alt={item.isChecked ? "Uncheck" : "Check"}/>
             </button>
@@ -70,10 +76,10 @@ const TaskItem: FC<TaskItemProps> = memo(({item, deleteItem, checkItem}) => {
                 <h3 className={`task-item__title`}>{item.title}</h3>
 
                 <div className={"task-item__bottom"}>
-                    <div className={`task-item__tags `}>
+                    <div className={`task-item__tags`}>
                         {tags}
                     </div>
-                    <div className={`task-item__date `}>{day_text}</div>
+                    <div className={`task-item__date`}>{day_text}</div>
                 </div>
             </div>
 
@@ -86,10 +92,7 @@ const TaskItem: FC<TaskItemProps> = memo(({item, deleteItem, checkItem}) => {
                         </Link>
                     </button>
 
-                    <button className={"task-item__control-item"} onClick={() => {
-                        setIsLoading(true);
-                        deleteItem(item.id)
-                    }}>
+                    <button className={"task-item__control-item"} onClick={handleDelete}>
                         <img src={trash_icon} alt={"Delete"}/>
                     </button>
                 </div>

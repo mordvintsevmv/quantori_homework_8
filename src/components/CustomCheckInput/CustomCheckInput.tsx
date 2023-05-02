@@ -8,7 +8,6 @@ interface CustomCheckInputProps {
     value: string,
     outline: string,
     isDefault?: boolean,
-    input_element: React.ReactNode,
     ref_check?: React.Ref<HTMLInputElement>,
     ref_input?: React.Ref<HTMLInputElement>,
     isEdit?: boolean
@@ -20,22 +19,24 @@ const CustomCheckInput: FC<CustomCheckInputProps> = ({
                                                          value,
                                                          outline,
                                                          isDefault = false,
-                                                         input_element,
                                                          ref_check,
                                                          ref_input,
-    isEdit
+                                                         isEdit
                                                      }) => {
 
     return (
         <label className={"custom-check-input"} style={{borderColor: outline}}>
-            <input className={"custom-check-input__input"} type={type} name={name} value={value}
-                   defaultChecked={isDefault} ref={ref_check}/>
+            <input className={"custom-check-input__input"}
+                   type={type}
+                   name={name}
+                   value={value}
+                   defaultChecked={isDefault}
+                   ref={ref_check}/>
             <div className={"custom-check-input__children"}>
                 <TaskTag name={value} isEdit={isEdit} ref_input={ref_input}/>
             </div>
         </label>
     )
-
 }
 
 export default CustomCheckInput

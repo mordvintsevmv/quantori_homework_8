@@ -29,25 +29,16 @@ const TodayTasks: FC<TodayTasksProps> = ({setTodayShown, items}) => {
         // Creating li element for every today task
         .map((item: Item) => <li className={"today-tasks__task"} key={item.id}>{item.title}</li>)
 
-    let today_text: string
-
-    if (today_list.length === 0) {
-        today_text = 'You have no tasks for today! '
-    } else {
-        today_text = 'You have the next planned tasks for today: '
-    }
-
     return (
         <div className={"today-tasks"}>
             <h2 className={"today-tasks__title"}>Good Morning</h2>
-            <p>{today_text}</p>
+            <p>{today_list.length === 0 ? 'You have no tasks for today!' : 'You have the next planned tasks for today:'}</p>
             <div className={"today-tasks__list"}>
                 <ul>
                     {today_list}
                 </ul>
             </div>
             <button className={"button today-tasks__ok-button"} onClick={setTodayShown}>Ok</button>
-
         </div>
     )
 }
