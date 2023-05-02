@@ -1,0 +1,55 @@
+/*
+Default Button
+*/
+.button {
+    height: 52px;
+
+    padding: 16px 32px;
+
+    border-radius: 12px;
+
+    background: rgba(60, 134, 244, 0.15);
+
+    color: #0053CF;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.button:hover {
+    background: rgba(60, 134, 244, 0.35);
+}
+
+.button:active {
+    background: #3C86F4;
+    color: #FFFFFF;
+}
+
+.button:disabled {
+    background: #D3D3D3;
+    color: #FFFFFF;
+    cursor: default;
+}
+
+/*
+Transparent Button
+*/
+.button--isTransparent {
+    background: none;
+    color: #0053CF;
+}
+
+.button--isTransparent:hover {
+    background: none;
+    color: rgba(239, 63, 62, 0.7);
+}
+
+.button--isTransparent:active {
+    background: none;
+    color: #EF3F3E;
+}
+
+.button--isTransparent:disabled {
+    color: #D3D3D3;
+}
