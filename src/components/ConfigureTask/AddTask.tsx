@@ -1,4 +1,4 @@
-import {FC, useRef, useState} from "react";
+import React, {FC, useRef, useState} from "react";
 import CustomCheckInput from "../CustomCheckInput/CustomCheckInput";
 import TaskTag from "../TaskTag/TaskTag";
 import Loading from "../Loading/Loading";
@@ -11,7 +11,6 @@ interface AddTaskProps {
 
 const AddTask: FC<AddTaskProps> = ({addTask}) => {
 
-    const title_ref = useRef<HTMLInputElement>(null)
     const date_ref = useRef<HTMLInputElement>(null)
 
     const tag_home_ref = useRef<HTMLInputElement>(null)
@@ -22,6 +21,7 @@ const AddTask: FC<AddTaskProps> = ({addTask}) => {
     const tag_custom_input_ref = useRef<HTMLInputElement>(null)
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [titleState, setTitleState] = useState<string>("")
 
     const navigate = useNavigate()
 
@@ -29,7 +29,7 @@ const AddTask: FC<AddTaskProps> = ({addTask}) => {
 
     const addTaskHandler = () => {
         setIsLoading(true)
-        const title = title_ref.current?.value || ""
+        const title = titleState
         const date = date_ref.current?.value || ""
 
         let tag: string[] = []
@@ -58,11 +58,17 @@ const AddTask: FC<AddTaskProps> = ({addTask}) => {
         navigate(-1)
     }
 
+    const handleTitleChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        const target = event.target as HTMLInputElement
+
+        setTitleState(target.value)
+    }
+
 
     return (
         <div className={`configure-task ${isLoading ? "configure-task--loading" : null}`}>
             <h3 className={"configure-task__title"}>Add Task</h3>
-            <input placeholder={"Task Title"} className={"text-input configure-task__input"} ref={title_ref}></input>
+            <input placeholder={"Task Title"} className={"text-input configure-task__input"} type={"text"} value={titleState} onInput={handleTitleChange}></input>
 
             <div className={"configure-task__options"}>
                 <form className={"configure-task__tag-list"}>
@@ -88,7 +94,7 @@ const AddTask: FC<AddTaskProps> = ({addTask}) => {
                 <button className={"button button--isTransparent configure-task__cancel-button"}
                         onClick={handleClose}>Cancel
                 </button>
-                <button className={"button configure-task__ok-button"} onClick={addTaskHandler}>Add Task</button>
+                <button className={"button configure-task__ok-button"} onClick={addTaskHandler} disabled={titleState.length < 1}>Add Task</button>
             </div>
 
             {isLoading ? <Loading/> : null}

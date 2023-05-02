@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef, useState} from "react";
 import CustomCheckInput from "../CustomCheckInput/CustomCheckInput";
 import TaskTag from "../TaskTag/TaskTag";
 import {useNavigate, useParams} from "react-router-dom";
@@ -26,6 +26,7 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
     const {id} = useParams()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [titleState, setTitleState] = useState<string>("")
 
     const today = new Date()
 
@@ -33,9 +34,6 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
     useEffect(() => {
         if (id) {
             load_item_by_id(id).then((item) => {
-                if (title_ref.current) {
-                    title_ref.current.value = item.title
-                }
                 if (date_ref.current) {
                     date_ref.current.value = item.date_complete
                 }
@@ -62,6 +60,7 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
                     tag_custom_input_ref.current.style.width = (tag_custom_input_ref.current.value.length * 6).toString() + "px"
                 }
 
+                setTitleState(item.title)
                 setIsLoading(false)
 
             })
@@ -71,7 +70,7 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
 
     const editTaskHandler = () => {
         setIsLoading(true)
-        const title = title_ref.current?.value || ""
+        const title = titleState
         const date = date_ref.current?.value || ""
 
         let tag: string[] = []
@@ -102,11 +101,17 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
         navigate(-1)
     }
 
+    const handleTitleChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        const target = event.target as HTMLInputElement
+
+        setTitleState(target.value)
+    }
+
 
     return (
         <div className={`configure-task ${isLoading ? "configure-task--loading" : null}`}>
             <h3 className={"configure-task__title"}>Edit Task</h3>
-            <input placeholder={"Task Title"} className={"text-input configure-task__input"} ref={title_ref}></input>
+            <input placeholder={"Task Title"} className={"text-input configure-task__input"} type={"text"} value={titleState} onInput={handleTitleChange} ></input>
 
             <div className={"configure-task__options"}>
                 <form className={"configure-task__tag-list"}>
@@ -131,7 +136,7 @@ const EditTask: FC<EditTaskProps> = ({editTask}) => {
             <div className={"configure-task__buttons"}>
                 <button className={"button button--isTransparent configure-task__cancel-button"} onClick={handleClose}>Cancel
                 </button>
-                <button className={"button configure-task__ok-button"} onClick={editTaskHandler}>Edit Task</button>
+                <button className={"button configure-task__ok-button"} onClick={editTaskHandler} disabled={titleState.length < 1}>Edit Task</button>
             </div>
 
             {isLoading ? <Loading/> : null}
