@@ -1,42 +1,45 @@
-import {dataFetch} from "./api";
 import {Item} from "../types/Item";
+import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 
-let serverAPI = dataFetch('http://localhost:3004')
+const axiosItemsConfig: AxiosRequestConfig = {
+    baseURL: 'http://localhost:3004',
+}
+
+export const serverAPI = axios.create(axiosItemsConfig)
 
 export let load_items = async (): Promise<Item[]> => {
-    return await serverAPI<Item[]>('items');
+    return await serverAPI.get('items')
+        .then((response: AxiosResponse<Item[]>) => {
+            return response.data
+        })
 }
 
 export let load_item_by_id = async (id: string): Promise<Item> => {
-    return await serverAPI<Item>(`items/${id}`);
+    return await serverAPI.get(`items/${id}`)
+        .then((response: AxiosResponse<Item>) => {
+            return response.data
+        })
 }
 
 export let post_item = async (item: Item): Promise<Item> => {
-    return await serverAPI<Item>('items', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item)
-    })
+    return await serverAPI.post('items', item)
+        .then((response: AxiosResponse<Item>) => {
+            return response.data
+        })
 }
 
 export let delete_item = async (id: string): Promise<{}> => {
-
-    return await serverAPI<{}>('items/' + id, {
-        method: 'DELETE'
-    })
+    return await serverAPI.delete(`items/${id}`)
+        .then((response: AxiosResponse<Item>) => {
+            return response.data
+        })
 }
 
 export let update_item = async (id: string, item: Item): Promise<Item> => {
-
-    return await serverAPI<Item>('items/' + id, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item)
-    })
+    return await serverAPI.put(`items/${id}`, item)
+        .then((response: AxiosResponse<Item>) => {
+            return response.data
+        })
 }
 
 export const change_API_path = (): void => {
@@ -51,5 +54,5 @@ export const change_API_path = (): void => {
 
     document.body.append(warning_text)
 
-    serverAPI = dataFetch('https://brainy-hem-lion.cyclic.app')
+    serverAPI.defaults.baseURL = "https://brainy-hem-lion.cyclic.app"
 }
