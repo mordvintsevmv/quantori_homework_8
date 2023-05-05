@@ -28,6 +28,18 @@
 
 ---
 
+# Quantori Homework #9
+
+### React-Router, Redux
+
+---
+
+**(HW9) ToDo Branch:** <a href="https://quantori-hw9-feature-todo.netlify.app/" target="_blank">Open page</a>
+
+**Description:** *ToDo List using React with Redux and Router.*
+
+---
+
 ## <a name="content">Content</a>
 
 1. [Task](#Task)
