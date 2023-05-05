@@ -9,19 +9,21 @@ import edit_icon from "./assets/edit.svg"
 
 import TaskTag from "../TaskTag/TaskTag";
 import {Link} from "react-router-dom";
+import {serverDeleteItem, serverUpdateItem} from "../../api/itemsAPI";
+import {useTypedDispatch} from "../../hooks/reduxHooks";
+import {fetchItems} from "../../redux/slices/itemSlice";
 
 const month_array: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 const day_array: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 interface TaskItemProps {
     item: Item,
-    deleteItem: (id: string) => void,
-    checkItem: (id: string) => void
 }
 
-const TaskItem: FC<TaskItemProps> = memo(({item, deleteItem, checkItem}) => {
+const TaskItem: FC<TaskItemProps> = memo(({item}) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const dispatch = useTypedDispatch()
 
     // Parsing date (for situations when there is string instead of Date)
     const parsed_date: Date = new Date(Date.parse(item.date_complete))
@@ -54,12 +56,14 @@ const TaskItem: FC<TaskItemProps> = memo(({item, deleteItem, checkItem}) => {
 
     const handleCheck = () => {
         setIsLoading(true);
-        checkItem(item.id)
+        serverUpdateItem(item.id, {isChecked: !item.isChecked})
+            .then(() => dispatch(fetchItems()))
     }
 
     const handleDelete = () => {
         setIsLoading(true);
-        deleteItem(item.id)
+        serverDeleteItem(item.id)
+            .then(() => dispatch(fetchItems()))
     }
 
     return (

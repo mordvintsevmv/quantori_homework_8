@@ -6,14 +6,12 @@ import TaskItem from "../TaskItem/TaskItem";
 interface TaskListProps {
     title: string,
     items: Item[],
-    deleteItem: (id: string) => void,
-    checkItem: (id: string) => void,
 }
 
-const TaskList: FC<TaskListProps> = memo(({title, items, deleteItem, checkItem}) => {
+const TaskList: FC<TaskListProps> = memo(({title, items}) => {
 
     const list_items: JSX.Element[] = items
-        .map((item: Item) => <TaskItem item={item} deleteItem={deleteItem} checkItem={checkItem} key={item.id}/>);
+        .map((item: Item) => <TaskItem item={item} key={item.id}/>);
 
     return (
         <div className={"task-list"}>

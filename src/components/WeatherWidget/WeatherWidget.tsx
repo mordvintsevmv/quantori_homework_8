@@ -1,50 +1,30 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useEffect} from "react";
 import "./WeatherWidget.css"
-import {getCurrentPosition, getWeather} from "../../api/weatherAPI";
-import {WeatherResponse} from "../../types/WeatherResponse";
-import {WeatherState} from "../../types/State";
-
-import error_img from "./assets/error.svg"
+import {getCurrentPosition} from "../../api/weatherAPI";
+import {useTypedDispatch, useTypedSelector} from "../../hooks/reduxHooks";
+import {fetchWeather} from "../../redux/slices/weatherSlice";
+import error_icon from "./assets/error.svg"
+import {statusType} from "../../types/statusType";
 
 const WeatherWidget: FC = () => {
 
-    const [weather, setWeather] = useState<WeatherState>({city: '', temp_c: '', weather_icon: '', weather_text: ''})
-    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const dispatch = useTypedDispatch()
+    const {weather, status, error} = useTypedSelector(state => state.weather)
+
+    const isLoading = [statusType.IDLE, statusType.LOADING].includes(status)
 
     useEffect(() => {
-
-        getCurrentPosition().then(
-            location => {
-                getWeather(location)
-                    .then((response: WeatherResponse) => {
-                        setWeather({
-                            city: response.location.name,
-                            temp_c: response.current.temp_c + "°",
-                            weather_icon: response.current.condition.icon,
-                            weather_text: response.current.condition.text
-                        })
-                        setIsLoading(false)
-                    })
-                    .catch(() => {
-                        setWeather({
-                            city: "Weather API Error",
-                            temp_c: "",
-                            weather_icon: error_img,
-                            weather_text: "Error"
-                        })
-                        setIsLoading(false)
-                    })
-            })
-    }, [])
+        getCurrentPosition().then((location) => dispatch(fetchWeather(location)))
+    }, [dispatch])
 
     return (
         <div className={"weather-widget"}>
             <img className={`weather-widget__icon ${isLoading ? "skeleton skeleton-img" : null}`}
-                 src={weather.weather_icon} alt={weather.weather_text}/>
+                 src={error ? error_icon : weather.weather_icon} alt={error ? "Error" : weather.weather_text}/>
             <div
-                className={`weather-widget__location ${isLoading ? "skeleton skeleton-text" : null}`}>{weather.city}</div>
+                className={`weather-widget__location ${isLoading ? "skeleton skeleton-text" : null}`}>{error ? error : weather.city}</div>
             <div
-                className={`weather-widget__temp ${isLoading ? "skeleton skeleton-text" : null}`}>{weather.temp_c}</div>
+                className={`weather-widget__temp ${isLoading ? "skeleton skeleton-text" : null}`}>{error ? "" : weather.temp_c}</div>
         </div>
     )
 }

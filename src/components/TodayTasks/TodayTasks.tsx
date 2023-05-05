@@ -1,13 +1,15 @@
 import {FC} from "react";
 import {Item} from "../../types/Item";
 import "./TodayTasks.css"
+import {useTypedDispatch, useTypedSelector} from "../../hooks/reduxHooks";
+import {setTodayShown} from "../../redux/slices/itemSlice";
 
-interface TodayTasksProps {
-    setTodayShown: () => void,
-    items: Item[]
-}
 
-const TodayTasks: FC<TodayTasksProps> = ({setTodayShown, items}) => {
+const TodayTasks: FC = () => {
+
+    const {items} = useTypedSelector(state => state.items)
+
+    const dispatch = useTypedDispatch()
 
     const today: Date = new Date()
 
@@ -16,18 +18,17 @@ const TodayTasks: FC<TodayTasksProps> = ({setTodayShown, items}) => {
         .filter((item: Item): boolean => {
             const parsed_date: Date = new Date(Date.parse(item.date_complete))
 
-            if (parsed_date.getFullYear() === today.getFullYear()
+            return parsed_date.getFullYear() === today.getFullYear()
                 && parsed_date.getMonth() === today.getMonth()
                 && parsed_date.getDate() === today.getDate()
-                && !item.isChecked
-            ) {
-                return true
-            } else {
-                return false
-            }
+                && !item.isChecked;
         })
         // Creating li element for every today task
         .map((item: Item) => <li className={"today-tasks__task"} key={item.id}>{item.title}</li>)
+
+    const handleOk = () => {
+        dispatch(setTodayShown(true))
+    }
 
     return (
         <div className={"today-tasks"}>
@@ -38,7 +39,7 @@ const TodayTasks: FC<TodayTasksProps> = ({setTodayShown, items}) => {
                     {today_list}
                 </ul>
             </div>
-            <button className={"button today-tasks__ok-button"} onClick={setTodayShown}>Ok</button>
+            <button className={"button today-tasks__ok-button"} onClick={handleOk}>Ok</button>
         </div>
     )
 }
