@@ -53,7 +53,6 @@ const weatherSlice = createSlice({
 
         builder.addCase(fetchWeather.rejected, (state, action) => {
             state.status = statusType.ERROR;
-            console.log(action)
             if (typeof action.payload === "string")
                 state.error = action.payload
             else

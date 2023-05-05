@@ -2,7 +2,7 @@
   "items": [
     {
       "id": "3b1b66d7-ed44-4740-aa8a-75c8ebb14014",
-      "isChecked": false,
+      "isChecked": true,
       "title": "Complete Homework #8",
       "tag": [
         "work"
@@ -91,17 +91,6 @@
       ],
       "date_complete": "2023-05-11",
       "date_created": "Sun Apr 30 2023 21:24:42 GMT+0400 (Армения, стандартное время)"
-    },
-    {
-      "id": "5006bf34-123d-4ca7-b685-12982f7c985d",
-      "isChecked": false,
-      "title": "Play Resident Evil 4 (Remake)",
-      "tag": [
-        "home",
-        "games"
-      ],
-      "date_complete": "2023-05-05",
-      "date_created": "Mon May 01 2023 00:10:39 GMT+0400 (Армения, стандартное время)"
     }
   ]
 }

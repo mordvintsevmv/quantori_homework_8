@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {Item} from "../../types/Item";
 import Modal from "../Modal/Modal";
 import {AddTask, EditTask} from "../ConfigureTask/ConfigureTask";
-import {change_API_path, serverFetchItems} from "../../api/itemsAPI";
+import {change_API_path} from "../../api/itemsAPI";
 import {Route, Routes} from "react-router-dom";
 import {fetchItems, setTodayShown} from "../../redux/slices/itemSlice";
 import {useTypedDispatch, useTypedSelector} from "../../hooks/reduxHooks";
@@ -21,9 +20,9 @@ const App = () => {
     useEffect(() => {
         fetch('http://localhost:3004/items')
             .catch(() => change_API_path())
-            .finally(() => serverFetchItems().then((response: Item[]) => {
+            .finally(() => {
                 dispatch(fetchItems())
-            }))
+            })
     }, [])
 
     const handleTodayClose = () => {
@@ -45,7 +44,8 @@ const App = () => {
                 </Route>
             </Routes>
 
-            {!isTodayShown && status === statusType.SUCCESS && <Modal onClose={handleTodayClose} modal_children={<TodayTasks/>}/>}
+            {!isTodayShown && status === statusType.SUCCESS &&
+                <Modal onClose={handleTodayClose} modal_children={<TodayTasks/>}/>}
 
 
         </div>

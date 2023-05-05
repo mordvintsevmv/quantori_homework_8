@@ -115,7 +115,7 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
 
             })
         }
-    }, [id])
+    }, [id, type])
 
     const handleClose = () => {
         navigate(-1)
