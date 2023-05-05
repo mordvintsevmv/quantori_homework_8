@@ -7,16 +7,20 @@
       "tag": [
         "work"
       ],
+      "description": "Rewrite ToDo List with React",
+      "subtasks": [],
       "date_complete": "2023-05-03",
       "date_created": "Fri Apr 28 2023 23:59:50 GMT+0400 (Армения, стандартное время)"
     },
     {
       "id": "5cd5db7b-4f33-4a2e-a085-4cad1b07dc7a",
-      "isChecked": false,
+      "isChecked": true,
       "title": "Complete Homework #9",
       "tag": [
         "work"
       ],
+      "description": "",
+      "subtasks": [],
       "date_complete": "2023-05-10",
       "date_created": "Sat Apr 29 2023 00:00:13 GMT+0400 (Армения, стандартное время)"
     },
@@ -27,6 +31,8 @@
       "tag": [
         "work"
       ],
+      "description": "",
+      "subtasks": [],
       "date_complete": "2023-05-17",
       "date_created": "Sat Apr 29 2023 00:00:50 GMT+0400 (Армения, стандартное время)"
     },
@@ -36,6 +42,24 @@
       "title": "Celebrate my birthday",
       "tag": [
         "home"
+      ],
+      "description": "Think of something interesting to celebrate my birthday!",
+      "subtasks": [
+        {
+          "id": "1",
+          "title": "Invite friends",
+          "isChecked": false
+        },
+        {
+          "id": "2",
+          "title": "Bake a cake",
+          "isChecked": false
+        },
+        {
+          "id": "3",
+          "title": "Order a kebab",
+          "isChecked": false
+        }
       ],
       "date_complete": "2023-12-13",
       "date_created": "Sat Apr 29 2023 00:03:04 GMT+0400 (Армения, стандартное время)"
@@ -47,6 +71,24 @@
       "tag": [
         "health"
       ],
+      "description": "I need new eyeglasses with chameleon lenses",
+      "subtasks": [
+        {
+          "id": "4",
+          "title": "Visit an oculist",
+          "isChecked": false
+        },
+        {
+          "id": "5",
+          "title": "Find a frame for glasses",
+          "isChecked": false
+        },
+        {
+          "id": "6",
+          "title": "Order new glasses",
+          "isChecked": false
+        }
+      ],
       "date_complete": "2023-09-07",
       "date_created": "Sat Apr 29 2023 00:03:16 GMT+0400 (Армения, стандартное время)"
     },
@@ -57,6 +99,8 @@
       "tag": [
         "home"
       ],
+      "description": "",
+      "subtasks": [],
       "date_complete": "2023-01-13",
       "date_created": "Sat Apr 29 2023 00:03:34 GMT+0400 (Армения, стандартное время)"
     },
@@ -67,6 +111,8 @@
       "tag": [
         "home"
       ],
+      "description": "",
+      "subtasks": [],
       "date_complete": "2023-02-17",
       "date_created": "Sun Apr 30 2023 21:20:33 GMT+0400 (Армения, стандартное время)"
     },
@@ -77,6 +123,19 @@
       "tag": [
         "home",
         "health"
+      ],
+      "description": "I should exercise more to improve my health!",
+      "subtasks": [
+        {
+          "id": "7",
+          "title": "Woke up at 6am",
+          "isChecked": false
+        },
+        {
+          "id": "8",
+          "title": "Start running",
+          "isChecked": false
+        }
       ],
       "date_complete": "2023-05-19",
       "date_created": "Sun Apr 30 2023 21:23:06 GMT+0400 (Армения, стандартное время)"
@@ -89,8 +148,39 @@
         "work",
         "other"
       ],
+      "description": "",
+      "subtasks": [],
       "date_complete": "2023-05-11",
       "date_created": "Sun Apr 30 2023 21:24:42 GMT+0400 (Армения, стандартное время)"
+    },
+    {
+      "id": "5006bf34-123d-4ca7-b685-12982f7c985d",
+      "isChecked": false,
+      "title": "Play Resident Evil 4 (Remake)",
+      "tag": [
+        "home",
+        "games"
+      ],
+      "description": "I really want to play a Resident Evil 4 Remake on my PS4",
+      "subtasks": [
+        {
+          "id": "9",
+          "title": "Buy the game",
+          "isChecked": false
+        },
+        {
+          "id": "10",
+          "title": "Download it",
+          "isChecked": false
+        },
+        {
+          "id": "11",
+          "title": "Play Resident Evil",
+          "isChecked": false
+        }
+      ],
+      "date_complete": "2023-05-05",
+      "date_created": "Mon May 01 2023 00:10:39 GMT+0400 (Армения, стандартное время)"
     }
   ]
 }

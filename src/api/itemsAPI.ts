@@ -1,4 +1,4 @@
-import {Item, ItemAny} from "../types/Item";
+import {Item, ItemAny, ItemSubtask, ItemSubtaskAny} from "../types/Item";
 import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 
 const axiosItemsConfig: AxiosRequestConfig = {
@@ -7,36 +7,77 @@ const axiosItemsConfig: AxiosRequestConfig = {
 
 export const serverAPI = axios.create(axiosItemsConfig)
 
-export let serverFetchItems = async (): Promise<Item[]> => {
+export const serverFetchItems = async (): Promise<Item[]> => {
     return await serverAPI.get('items')
         .then((response: AxiosResponse<Item[]>) => {
             return response.data
         })
 }
 
-export let serverFetchById = async (id: string): Promise<Item> => {
+export const serverFetchById = async (id: string): Promise<Item> => {
     return await serverAPI.get(`items/${id}`)
         .then((response: AxiosResponse<Item>) => {
             return response.data
         })
 }
 
-export let serverPostItem = async (item: Item): Promise<Item> => {
+export const serverPostItem = async (item: Item): Promise<Item> => {
     return await serverAPI.post('items', item)
         .then((response: AxiosResponse<Item>) => {
             return response.data
         })
 }
 
-export let serverDeleteItem = async (id: string): Promise<{}> => {
+export const serverDeleteItem = async (id: string): Promise<{}> => {
     return await serverAPI.delete(`items/${id}`)
         .then((response: AxiosResponse<Item>) => {
             return response.data
         })
 }
 
-export let serverUpdateItem = async (id: string, updatedFields: ItemAny): Promise<Item> => {
+export const serverUpdateItem = async (id: string, updatedFields: ItemAny): Promise<Item> => {
     return await serverAPI.patch(`items/${id}`, updatedFields)
+        .then((response: AxiosResponse<Item>) => {
+            return response.data
+        })
+}
+
+export const serverFetchSubtasks = async (item_id: string): Promise<ItemSubtask[]> => {
+    return await serverAPI.get(`items/${item_id}`)
+        .then((response: AxiosResponse<Item>) => {
+            return response.data.subtasks
+        })
+}
+
+export const serverCreateSubtask = async (item_id: string, subtask: ItemSubtask): Promise<Item> => {
+
+    const subtasks = await serverFetchSubtasks(item_id)
+
+    const edited_sub = [...subtasks, subtask]
+
+    return await serverAPI.patch(`items/${item_id}`, {subtasks: edited_sub})
+        .then((response: AxiosResponse<Item>) => {
+            return response.data
+        })
+}
+
+export const serverDeleteSubtask = async (item_id: string, subtask_id: string): Promise<Item> => {
+
+    const subtasks = await serverFetchSubtasks(item_id)
+
+    const edited_sub = subtasks.filter(task => task.id !== subtask_id)
+
+    return await serverAPI.patch(`items/${item_id}`, {subtasks: edited_sub})
+        .then((response: AxiosResponse<Item>) => {
+            return response.data
+        })
+}
+
+export const serverUpdateSubtask = async (item_id: string, subtask_id: string, updatedFields: ItemSubtaskAny): Promise<Item> => {
+
+    const subtasks = await serverFetchSubtasks(item_id)
+    const edited_sub = subtasks.map(task => task.id !== subtask_id ? task : {...task, ...updatedFields})
+    return await serverAPI.patch(`items/${item_id}`, {subtasks: edited_sub})
         .then((response: AxiosResponse<Item>) => {
             return response.data
         })

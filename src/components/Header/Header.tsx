@@ -7,6 +7,7 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = memo(({title}) => {
+
     return (
         <div className={"Header"}>
             <h1 className={"Header__title"}>{title}</h1>

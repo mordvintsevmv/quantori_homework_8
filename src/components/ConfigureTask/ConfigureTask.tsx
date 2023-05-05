@@ -73,6 +73,8 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
                 isChecked: false,
                 title: title,
                 tag: tag,
+                description: "",
+                subtasks: [],
                 date_complete: date,
                 date_created: new Date().toString()
             }).then(() => dispatch(fetchItems()))
