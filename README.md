@@ -38,6 +38,22 @@
 
 **Description:** *ToDo List using React with Redux and Router.*
 
+From Task:
+
+- [X] Using Redux to Store Items, Weather state and Theme mode;
+- [X] Using Redux Thunk for fetching Items and Weather;
+- [X] Filter by tag name;
+- [X] Sort items;
+- [X] Search query and Filter tags in URI;
+- [X] Edit Items;
+- [X] Syncing Redux State between tabs using Sync-State middlewarre.
+
+Extra:
+
+- [X] (Beta) Light and Dark theme;
+- [X] Description for Tasks;
+- [X] Subtasks.
+
 ---
 
 ## <a name="content">Content</a>
