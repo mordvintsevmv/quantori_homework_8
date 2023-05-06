@@ -18,29 +18,54 @@
     text-transform: lowercase;
 }
 
-.task-tag--blue {
+.task-tag--light-blue {
     background: rgba(60, 134, 244, 0.31);
     color: #0053CF;
 }
 
-.task-tag--purple {
+.task-tag--light-purple {
     background: #E8D7FF;
     color: #9747FF;
 }
 
-.task-tag--green {
+.task-tag--light-green {
     background: #E2F6E2;
     color: #639462;
 }
 
-.task-tag--orange {
+.task-tag--light-orange {
     background: #FFECC7;
     color: #EA8C00;
 }
 
-.task-tag--red {
+.task-tag--light-red {
     background: rgba(239, 63, 62, 0.31);
     color: #EF3F3E;
+}
+
+.task-tag--dark-blue {
+    color: #C2DEF4;
+    background: #0053CF;
+}
+
+.task-tag--dark-purple {
+    color: #E8D7FF;
+    background: #9747FF;
+}
+
+.task-tag--dark-green {
+    color: #E2F6E2;
+    background: #639462;
+}
+
+.task-tag--dark-orange {
+    color: #FFECC7;
+    background: #EA8C00;
+}
+
+.task-tag--dark-red {
+    color: #FCEECB;
+    background: #EF3F3E;
 }
 
 .task-tag__input {

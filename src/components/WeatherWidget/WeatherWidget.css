@@ -41,6 +41,15 @@
     margin-left: auto;
 }
 
+.weather-widget--dark .weather-widget__location{
+    color: #D2D2D2;
+}
+
+.weather-widget--dark  .weather-widget__temp{
+    color: #FFFFFF;
+}
+
+
 
 @media screen and (max-width: 900px) {
     .weather-widget {

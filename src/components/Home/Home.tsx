@@ -3,7 +3,7 @@ import '../Home/Home.css';
 import TaskList from "../TaskList/TaskList";
 import {Item} from "../../types/Item";
 import {Link, Outlet, useSearchParams} from "react-router-dom";
-import Select, {SingleValue} from 'react-select'
+import Select, {MultiValue, SingleValue, StylesConfig} from 'react-select'
 import TaskTag from "../TaskTag/TaskTag";
 import {sortItems, SortType} from "../../commonScripts/item_sorting";
 import {useTypedSelector} from "../../hooks/reduxHooks";
@@ -12,6 +12,7 @@ const Home = () => {
 
     const {items, status, error} = useTypedSelector(state => state.items)
     const [searchParams, setSearchParams] = useSearchParams()
+    const theme = useTypedSelector(state => state.theme)
 
     const search = searchParams.get("search")
     const filters = searchParams.get("filters")
@@ -84,6 +85,38 @@ const Home = () => {
         label: JSX.Element
     }
 
+
+    const colourStyles: StylesConfig<SortOptions> = {
+        // Wrapper of Selected item
+        control: (styles, {menuIsOpen}) => ({
+            ...styles,
+            backgroundColor: theme === "dark" ? "#363636" : "#F5F5F5",
+            color: theme === "dark" ? "#FFFFFF" : "#1D1D1D",
+           borderColor: theme === "dark" ? "#202020" : "#D2D2D2"
+        }),
+
+        // Selected Item
+        singleValue: (styles) => ({
+            ...styles,
+            backgroundColor: theme === "dark" ? "#363636" : "#F5F5F5",
+            color: theme === "dark" ? "#FFFFFF" : "#1D1D1D"
+        }),
+
+        // Menu Wrapper
+        menu: (styles) => ({...styles, backgroundColor: theme === "dark" ? "#363636" : "#F5F5F5"}),
+
+
+        // Menu Item
+        option: (styles, {isFocused, isSelected}) => ({
+            ...styles,
+            backgroundColor: theme === "dark"
+                ? (isFocused) ? "#282828" : "#363636"
+                : (isFocused) ? "#F5F5F5" : "#FFFFFF",
+            color: theme === "dark" ? "#FFFFFF" : "#1D1D1D"
+        }),
+
+    };
+
     const options: SortOptions[] = [
         {value: SortType.DATE_CREATE_INCREASING, label: <div className={"sort sort--increasing"}>Date Created</div>},
         {value: SortType.DATE_CREATE_DECREASING, label: <div className={"sort sort--decreasing"}>Date Created</div>},
@@ -93,8 +126,8 @@ const Home = () => {
         {value: SortType.TITLE_DECREASING, label: <div className={"sort sort--decreasing"}>Title</div>},
     ]
 
-    const handleSelectChange = (selectedOption: SingleValue<SortOptions>) => {
-        if (selectedOption) {
+    const handleSelectChange = (selectedOption: SingleValue<SortOptions> | MultiValue<SortOptions>) => {
+        if (selectedOption && "value" in selectedOption) {
             setSortType(selectedOption.value)
         }
     }
@@ -111,11 +144,12 @@ const Home = () => {
         <div className="Home">
 
             <div className={"Home__controls"}>
-                <input className={" Home__search text-input "} type={"text"} placeholder={"Search Task"}
+                <input className={` Home__search text-input text-input--${theme}`} type={"text"}
+                       placeholder={"Search Task"}
                        value={searchInput} onInput={handleSearch}/>
 
                 <Link to={"/add-task"}>
-                    <button className={"button Home__add-button"}>
+                    <button className={`button button--${theme} Home__add-button`}>
                         + New Task
                     </button>
                 </Link>
@@ -166,7 +200,7 @@ const Home = () => {
 
                 </div>
 
-                <Select className={"Home__sort"} options={options} onChange={handleSelectChange}
+                <Select className={"Home__sort"} options={options} styles={colourStyles} onChange={handleSelectChange}
                         defaultValue={options[1]}/>
 
 

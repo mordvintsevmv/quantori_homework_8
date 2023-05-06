@@ -1,5 +1,6 @@
 import React, {FC} from "react";
 import "./TaskTag.css"
+import {useTypedSelector} from "../../hooks/reduxHooks";
 
 interface TaskTagProps {
     name: string,
@@ -9,6 +10,8 @@ interface TaskTagProps {
 }
 
 const TaskTag: FC<TaskTagProps> = ({name, isColored = true, isEdit = false, ref_input}) => {
+
+    const theme = useTypedSelector(state => state.theme)
 
     let tag_color: string = ""
 
@@ -43,14 +46,14 @@ const TaskTag: FC<TaskTagProps> = ({name, isColored = true, isEdit = false, ref_
 
     if (isEdit) {
         return (
-            <div className={`task-tag task-tag--${tag_color}`}>
+            <div className={`task-tag task-tag--${theme}-${tag_color}`}>
                 <input className={"task-tag__input"} type={"text"} placeholder={name} onInput={handleInput}
                        ref={ref_input}/>
             </div>
         )
     } else {
         return (
-            <div className={`task-tag task-tag--${tag_color}`}>{name}</div>
+            <div className={`task-tag task-tag--${theme}-${tag_color}`}>{name}</div>
         )
     }
 }

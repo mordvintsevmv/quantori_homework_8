@@ -5,7 +5,7 @@ import "./ConfigureTask.css"
 import {useNavigate, useParams} from "react-router-dom";
 import {serverFetchById, serverPostItem, serverUpdateItem} from "../../api/itemsAPI";
 import {fetchItems} from "../../redux/slices/itemSlice";
-import {useTypedDispatch} from "../../hooks/reduxHooks";
+import {useTypedDispatch, useTypedSelector} from "../../hooks/reduxHooks";
 
 export enum configureTaskType {
     CREATE,
@@ -20,6 +20,7 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(type === configureTaskType.EDIT)
     const [titleState, setTitleState] = useState<string>("")
+    const theme = useTypedSelector(state => state.theme)
 
     const {id} = useParams()
 
@@ -135,9 +136,9 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
                 "Unknown operation"
 
     return (
-        <div className={`configure-task ${isLoading ? "configure-task--loading" : null}`}>
+        <div className={`configure-task configure-task--${theme} ${isLoading ? "configure-task--loading" : null}`}>
             <h3 className={"configure-task__title"}>{typeText}</h3>
-            <input placeholder={"Task Title"} className={"text-input configure-task__input"} type={"text"}
+            <input placeholder={"Task Title"} className={`text-input text-input--${theme} configure-task__input`} type={"text"}
                    value={titleState} onInput={handleTitleChange}></input>
 
             <div className={"configure-task__options"}>
@@ -156,7 +157,7 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
                                       ref_input={tag_custom_input_ref} isEdit={true}/>
                 </form>
 
-                <input className={"configure-task__date"} type={"date"} ref={date_ref}
+                <input className={`configure-task__date text-input--${theme}`} type={"date"} ref={date_ref}
                        defaultValue={`${today.toLocaleDateString('en-CA')}`}/>
             </div>
 
@@ -164,7 +165,7 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
                 <button className={"button button--isTransparent configure-task__cancel-button"}
                         onClick={handleClose}>Cancel
                 </button>
-                <button className={"button configure-task__ok-button"} onClick={handleSubmit}
+                <button className={`button button--${theme} configure-task__ok-button`} onClick={handleSubmit}
                         disabled={titleState.length < 1}>{typeText}
                 </button>
             </div>

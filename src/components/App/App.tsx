@@ -14,6 +14,7 @@ import {statusType} from "../../types/statusType";
 const App = () => {
 
     const {isTodayShown, status} = useTypedSelector(state => state.items)
+    const theme = useTypedSelector(state => state.theme)
 
     const dispatch = useTypedDispatch()
 
@@ -37,7 +38,7 @@ const App = () => {
     }
 
     return (
-        <div className={"App"}>
+        <div className={`App App--${theme}`}>
 
             <Header title={"ToDo List"}/>
 

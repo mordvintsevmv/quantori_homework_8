@@ -10,6 +10,7 @@ const WeatherWidget: FC = () => {
 
     const dispatch = useTypedDispatch()
     const {weather, status, error} = useTypedSelector(state => state.weather)
+    const theme = useTypedSelector(state => state.theme)
 
     const isLoading = [statusType.IDLE, statusType.LOADING].includes(status)
 
@@ -18,7 +19,7 @@ const WeatherWidget: FC = () => {
     }, [dispatch])
 
     return (
-        <div className={"weather-widget"}>
+        <div className={`weather-widget weather-widget--${theme}`}>
             <img className={`weather-widget__icon ${isLoading ? "skeleton skeleton-img" : null}`}
                  src={error ? error_icon : weather.weather_icon} alt={error ? "Error" : weather.weather_text}/>
             <div

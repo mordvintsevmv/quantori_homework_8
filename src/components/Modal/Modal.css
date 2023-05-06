@@ -21,10 +21,6 @@
     width: fit-content;
     height: fit-content;
 
-    background: #FFFFFF;
-
-    border-radius: 24px;
-
     z-index: 1001;
 
     box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.15);
