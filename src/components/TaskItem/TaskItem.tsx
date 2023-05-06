@@ -89,7 +89,7 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
             title: "",
             isChecked: false
         })
-            .then(()=> dispatch(fetchItems()))
+            .then(() => dispatch(fetchItems()))
     }
 
     return (
@@ -106,7 +106,7 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
                 <div className={"task-item__info"}>
                     <h3 className={`task-item__title`} onClick={handleExpand}>{item.title}</h3>
 
-                   <div className={`task-item__bottom ${isExpanded ? "task-item__bottom--hidden" : null}`}>
+                    <div className={`task-item__bottom ${isExpanded ? "task-item__bottom--hidden" : null}`}>
                         <div className={`task-item__tags`}>
                             {tags}
                         </div>
@@ -137,13 +137,13 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
             </div>
 
             {isExpanded && <div className={"task-item__details"}>
-                <textarea defaultValue={item.description} placeholder={"Task Description"} className={"task-item__description"} ref={description_ref} onBlur={handleDescription}/>
+                <textarea defaultValue={item.description} placeholder={"Task Description"}
+                          className={"task-item__description"} ref={description_ref} onBlur={handleDescription}/>
 
-                <button className={"task-item__create-subtask"} onClick={handleCreate}>+ Create Subtask</button>
 
                 <div className={"task-item__subtasks"}>
-
                     {item.subtasks.map((subtask) => <Subtask item_id={item.id} subtask={subtask} key={subtask.id}/>)}
+                    <button className={"task-item__create-subtask"} onClick={handleCreate}>+ Create Subtask</button>
                 </div>
 
                 <div className={`task-item__bottom task-item__bottom--expanded`}>

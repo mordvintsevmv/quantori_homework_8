@@ -1,4 +1,4 @@
-.subtask{
+.subtask {
     position: relative;
 
     display: flex;
@@ -10,25 +10,30 @@
     margin-bottom: 15px;
 }
 
-.subtask__checkbox{
+.subtask__checkbox {
 }
 
-.subtask__checkbox-img--checked:hover{
+.subtask__title {
+    all: unset;
+}
+
+.subtask__title--checked {
+    opacity: 0.6;
+    text-decoration: line-through rgba(0, 0, 0, 0.6);
+}
+
+.subtask__checkbox-img--checked:hover {
     opacity: 0.6;
 }
 
-.subtask__checkbox-img--unchecked:hover{
+.subtask__checkbox-img--unchecked:hover {
     filter: brightness(0.8);
 }
 
-.subtask__checkbox-img{
+.subtask__checkbox-img {
 
 }
 
-.subtask__delete{
+.subtask__delete {
     width: 14px;
-}
-
-.subtask__title{
-    all: unset;
 }

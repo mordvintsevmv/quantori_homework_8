@@ -47,7 +47,8 @@ const Subtask: FC<SubtaskProps> = ({item_id, subtask}) => {
                     alt={subtask.isChecked ? "Uncheck" : "Check"}/>
             </button>
 
-            <input defaultValue={subtask.title} placeholder={"Subtask Title"} className={"subtask__title"}
+            <input defaultValue={subtask.title} placeholder={"Subtask Title"}
+                   className={`subtask__title ${subtask.isChecked ? "subtask__title--checked" : "subtask__title--unchecked"}`}
                    onBlur={handleTitle} ref={title_ref}/>
 
             <button className={"subtask__delete task-item__control-item"} onClick={handleDelete}>
