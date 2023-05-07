@@ -4,6 +4,7 @@ import './commonStyles/index.css';
 import "./commonStyles/null.css"
 import "./commonStyles/Input.css"
 import "./commonStyles/Button.css"
+import "./commonStyles/IconButton.css"
 import App from './components/App/App';
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";

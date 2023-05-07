@@ -16,7 +16,10 @@ const themeSlice = createSlice({
     name: "theme",
     initialState,
     reducers:{
-        updateTheme: (state, action) => action.payload
+        updateTheme: (state, action) => {
+            localStorage.setItem("theme", action.payload)
+            return action.payload
+        }
     }
 })
 

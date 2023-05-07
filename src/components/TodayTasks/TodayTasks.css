@@ -6,6 +6,16 @@
     max-height: 500px;
 
     padding: 24px 30px;
+
+    border-radius: 24px;
+}
+
+.today-tasks--dark {
+    background: #282828;
+}
+
+.today-tasks--light {
+    background: #FFFFFF;
 }
 
 .today-tasks__title {

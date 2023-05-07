@@ -117,17 +117,17 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
                 {!item.isChecked &&
                     <div className={"task-item__controls"}>
 
-                        <button className={"task-item__control-item"}>
+                        <button className={"task-item__control-item icon-button"}>
                             <Link to={`/edit/${item.id}`}>
                                 <img src={edit_icon} alt={"Edit"}/>
                             </Link>
                         </button>
 
-                        <button className={"task-item__control-item"} onClick={handleDelete}>
+                        <button className={"task-item__control-item icon-button"} onClick={handleDelete}>
                             <img src={trash_icon} alt={"Delete"}/>
                         </button>
 
-                        <button className={"task-item__control-item task-item__control-item--expand"}
+                        <button className={"task-item__control-item task-item__control-item--expand icon-button"}
                                 onClick={handleExpand}>
                             <img src={isExpanded ? arrow_opened : arrow_closed} alt={"Expand"}/>
                         </button>

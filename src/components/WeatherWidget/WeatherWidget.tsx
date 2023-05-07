@@ -6,7 +6,10 @@ import {fetchWeather} from "../../redux/slices/weatherSlice";
 import error_icon from "./assets/error.svg"
 import {statusType} from "../../types/statusType";
 
-const WeatherWidget: FC = () => {
+interface WeatherWidgetProps {
+    className?: string
+}
+const WeatherWidget: FC<WeatherWidgetProps> = ({className}) => {
 
     const dispatch = useTypedDispatch()
     const {weather, status, error} = useTypedSelector(state => state.weather)
@@ -19,7 +22,7 @@ const WeatherWidget: FC = () => {
     }, [dispatch])
 
     return (
-        <div className={`weather-widget weather-widget--${theme}`}>
+        <div className={`weather-widget weather-widget--${theme} ${className}`}>
             <img className={`weather-widget__icon ${isLoading ? "skeleton skeleton-img" : null}`}
                  src={error ? error_icon : weather.weather_icon} alt={error ? "Error" : weather.weather_text}/>
             <div

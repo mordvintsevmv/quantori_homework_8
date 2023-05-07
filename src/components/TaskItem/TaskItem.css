@@ -105,22 +105,9 @@
 
 }
 
-.task-item__control-item {
-    cursor: pointer;
-
+.task-item__control-item{
     width: 16px;
     height: 16px;
-}
-
-.task-item__control-item :hover {
-    filter: brightness(0) invert(0) invert(42%) sepia(69%) saturate(900%) hue-rotate(186deg) brightness(99%) contrast(94%);
-    opacity: 0.6;
-    will-change: transform;
-}
-
-.task-item__control-item :active {
-    filter: brightness(0) invert(0) invert(17%) sepia(84%) saturate(2353%) hue-rotate(205deg) brightness(121%) contrast(113%);
-    will-change: transform;
 }
 
 .task-item__control-item--expand {
@@ -145,7 +132,7 @@
 
     width: 410px;
     min-height: 70px;
-    border-bottom: 1px solid rgba(0,0,0,0.5);
+    border-bottom: 1px solid #838383;
 
     margin-left: 15px;
     margin-bottom: 10px;

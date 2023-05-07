@@ -115,6 +115,13 @@ const Home = () => {
             color: theme === "dark" ? "#FFFFFF" : "#1D1D1D"
         }),
 
+        // Dropdown Arrow
+        dropdownIndicator: (styles, {isFocused, isDisabled, }) => ({
+            ...styles,
+            cursor: "pointer",
+            filter: isFocused ? "brightness(0) invert(0) invert(42%) sepia(69%) saturate(900%) hue-rotate(186deg) brightness(99%) contrast(94%)" : "brightness(0) invert(0) invert(54%) sepia(16%) saturate(0%) hue-rotate(190deg) brightness(93%) contrast(92%)"
+        }),
+
     };
 
     const options: SortOptions[] = [

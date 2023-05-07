@@ -143,16 +143,16 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
 
             <div className={"configure-task__options"}>
                 <form className={"configure-task__tag-list"}>
-                    <CustomCheckInput name={'tag'} value={"home"} outline={"#639462"} type={"checkbox"}
+                    <CustomCheckInput name={'tag'} value={"home"} outline={theme === "dark" ? "#E2F6E2" : "#639462"} type={"checkbox"}
                                       ref_check={tag_home_ref}/>
-                    <CustomCheckInput name={'tag'} value={"health"} outline={"#0053CF"} type={"checkbox"}
+                    <CustomCheckInput name={'tag'} value={"health"} outline={theme === "dark" ? "#E8D7FF" : "#0053CF"} type={"checkbox"}
                                       ref_check={tag_health_ref}/>
-                    <CustomCheckInput name={'tag'} value={"work"} outline={"#9747FF"} type={"checkbox"}
+                    <CustomCheckInput name={'tag'} value={"work"} outline={theme === "dark" ? "#C2DEF4" : "#9747FF"} type={"checkbox"}
                                       ref_check={tag_work_ref}/>
-                    <CustomCheckInput name={'tag'} value={"other"} outline={"#EA8C00"} type={"checkbox"}
+                    <CustomCheckInput name={'tag'} value={"other"} outline={theme === "dark" ? "#FFECD8" : "#EA8C00"} type={"checkbox"}
                                       isDefault={true}
                                       ref_check={tag_other_ref}/>
-                    <CustomCheckInput name={'tag'} value={"..."} outline={"#EF3F3E"} type={"checkbox"}
+                    <CustomCheckInput name={'tag'} value={"..."} outline={theme === "dark" ? "#FCEECB" : "#EF3F3E"} type={"checkbox"}
                                       ref_check={tag_custom_check_ref}
                                       ref_input={tag_custom_input_ref} isEdit={true}/>
                 </form>

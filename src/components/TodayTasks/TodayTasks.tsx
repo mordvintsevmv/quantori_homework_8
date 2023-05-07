@@ -8,6 +8,7 @@ import {setTodayShown} from "../../redux/slices/itemSlice";
 const TodayTasks: FC = () => {
 
     const {items} = useTypedSelector(state => state.items)
+    const theme = useTypedSelector(state => state.theme)
 
     const dispatch = useTypedDispatch()
 
@@ -31,7 +32,7 @@ const TodayTasks: FC = () => {
     }
 
     return (
-        <div className={"today-tasks"}>
+        <div className={`today-tasks today-tasks--${theme}`}>
             <h2 className={"today-tasks__title"}>Good Morning</h2>
             <p>{today_list.length === 0 ? 'You have no tasks for today!' : 'You have the next planned tasks for today:'}</p>
             <div className={"today-tasks__list"}>
