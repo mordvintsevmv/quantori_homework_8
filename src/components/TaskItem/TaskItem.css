@@ -105,12 +105,12 @@
 
 }
 
-.task-item__control-item{
+.task-item__control-item {
     width: 16px;
     height: 16px;
 }
 
-.task-item__control-item--expand {
+.task-item__control-item-expand {
     margin-left: 15px;
     width: 12px;
 }

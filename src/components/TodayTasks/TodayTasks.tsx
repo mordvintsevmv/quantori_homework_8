@@ -1,8 +1,9 @@
 import {FC} from "react";
 import {Item} from "../../types/Item";
-import "./TodayTasks.css"
+import "./TodayTasks.scss"
 import {useTypedDispatch, useTypedSelector} from "../../hooks/reduxHooks";
 import {setTodayShown} from "../../redux/slices/itemSlice";
+import Button from "../BaseComponents/Button";
 
 
 const TodayTasks: FC = () => {
@@ -14,7 +15,7 @@ const TodayTasks: FC = () => {
 
     const today: Date = new Date()
 
-    let today_list: JSX.Element[] = items
+    const today_list: JSX.Element[] = items
         // Filtering Today Tasks
         .filter((item: Item): boolean => {
             const parsed_date: Date = new Date(Date.parse(item.date_complete))
@@ -40,7 +41,7 @@ const TodayTasks: FC = () => {
                     {today_list}
                 </ul>
             </div>
-            <button className={"button today-tasks__ok-button"} onClick={handleOk}>Ok</button>
+            <Button text={"Ok"} className={"today-tasks__ok-button"} onClick={handleOk}/>
         </div>
     )
 }

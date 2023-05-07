@@ -39,6 +39,7 @@ const weatherSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchWeather.pending, (state) => {
             state.status = statusType.LOADING
+            state.error = null;
         })
 
         builder.addCase(fetchWeather.fulfilled, (state, action) => {
@@ -49,6 +50,7 @@ const weatherSlice = createSlice({
                 weather_icon: action.payload.current.condition.icon,
                 weather_text: action.payload.current.condition.text
             }
+            state.error = null;
         })
 
         builder.addCase(fetchWeather.rejected, (state, action) => {

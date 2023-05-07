@@ -1,0 +1,113 @@
+/*
+Default Button
+*/
+.button {
+  height: 52px;
+
+  padding: 16px 32px;
+
+  border-radius: 12px;
+
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.button--light {
+  color: #0053CF;
+  background: rgba(60, 134, 244, 0.15);
+
+  &:hover {
+    background: rgba(60, 134, 244, 0.35);
+  }
+
+  &:active {
+    background: #3C86F4;
+    color: #FFFFFF;
+  }
+
+  &:disabled {
+    background: #D3D3D3;
+    color: #FFFFFF;
+    opacity: 0.5;
+  }
+}
+
+.button--dark {
+  color: #FFFFFF;
+  background: rgba(60, 134, 244, 0.45);
+
+  &:hover {
+    background: rgba(60, 134, 244, 0.65);
+  }
+
+  &:active {
+    background: #3C86F4;
+    color: #FFFFFF;
+  }
+
+  &:disabled {
+    background: #1D1D1D;
+    color: #D2D2D2;
+    cursor: default;
+    opacity: 0.5;
+  }
+}
+
+/*
+Transparent Button
+*/
+.button--isTransparent {
+  background: none;
+
+  &:hover {
+    background: none;
+  }
+
+  &:active {
+    background: none;
+  }
+
+  &:disabled {
+    background: none;
+  }
+}
+
+.button--isTransparent-dark {
+  background: none;
+  color: #E2E2E2;
+
+  &:hover {
+    background: none;
+    color: #EF3F3E;
+  }
+
+  &:active {
+    background: none;
+    color: rgba(239, 63, 62, 0.6);
+  }
+
+  &:disabled {
+    color: #D3D3D3;
+  }
+}
+
+.button--isTransparent-light {
+  background: none;
+  color: #0053CF;
+
+  &:hover {
+    background: none;
+    color: rgba(239, 63, 62, 0.7);
+  }
+
+  &:active {
+    background: none;
+    color: #EF3F3E;
+  }
+
+  &:disabled {
+    color: #D3D3D3;
+  }
+}

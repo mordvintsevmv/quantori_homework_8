@@ -19,14 +19,6 @@
 
 .Header__theme-toggle {
     grid-area: theme;
-
-    height: 20px;
-    width: 20px;
-}
-
-.Header__theme-img {
-    height: 20px;
-    width: 20px;
 }
 
 .Header__weather {

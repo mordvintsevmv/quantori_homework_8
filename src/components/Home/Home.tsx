@@ -2,19 +2,26 @@ import React, {useEffect, useMemo, useState} from 'react';
 import '../Home/Home.css';
 import TaskList from "../TaskList/TaskList";
 import {Item} from "../../types/Item";
-import {Link, Outlet, useSearchParams} from "react-router-dom";
-import Select, {MultiValue, SingleValue, StylesConfig} from 'react-select'
+import {Outlet, useNavigate, useSearchParams} from "react-router-dom";
+import {MultiValue, SingleValue} from 'react-select'
 import TaskTag from "../TaskTag/TaskTag";
 import {sortItems, SortType} from "../../commonScripts/item_sorting";
 import {useTypedSelector} from "../../hooks/reduxHooks";
+import {statusType} from "../../types/statusType";
+import Loading from "../Loading/Loading";
+import SortSelect, {SortOptions} from "../SortSelect/SortSelect";
+import Button from "../BaseComponents/Button";
+import Input from "../BaseComponents/Input";
 
 const Home = () => {
 
     const {items, status, error} = useTypedSelector(state => state.items)
-    const [searchParams, setSearchParams] = useSearchParams()
-    const theme = useTypedSelector(state => state.theme)
 
-    const search = searchParams.get("search")
+    const navigate = useNavigate()
+
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const search = searchParams.get("q")
     const filters = searchParams.get("filters")
 
     const [filterTags, setFilterTags] = useState<string[]>([])
@@ -22,10 +29,13 @@ const Home = () => {
     const [searchInput, setSearchInput] = useState<string>("")
 
     // Sorting and filtering items
-    let in_work_items: Item[] = useMemo(
+    const in_work_items: Item[] = useMemo(
         () => {
+
+            // filtering by search input
             let temp_items = items.filter((item) => !item.isChecked && (item.title.toLowerCase().replace(/\s+/g, '').includes(searchInput.toLowerCase().replace(/\s+/g, '') || '')))
 
+            // filtering by tags
             if (filterTags.length > 0) {
                 if (filterTags.includes("custom"))
                     temp_items = temp_items.filter((item) => item.tag.some((tag: string) => filterTags.includes(tag) || !['home', 'health', "work", "other"].includes(tag)))
@@ -33,10 +43,10 @@ const Home = () => {
                     temp_items = temp_items.filter((item) => item.tag.some((tag: string) => filterTags.includes(tag)))
             }
 
-            temp_items.sort((item1, item2) => sortItems(item1, item2, sortType))
+            // sorting
+            temp_items = temp_items.sort((item1, item2) => sortItems(item1, item2, sortType))
 
             return temp_items
-
         }, [items, searchInput, filterTags, sortType])
 
 
@@ -72,71 +82,22 @@ const Home = () => {
         const input = event.target as HTMLInputElement
 
         if (input.value.length > 0)
-            searchParams.set('search', input.value)
+            searchParams.set('q', input.value)
         else
-            searchParams.delete('search')
+            searchParams.delete('q')
 
         setSearchParams(searchParams)
         setSearchInput(input.value)
     }
 
-    interface SortOptions {
-        value: SortType,
-        label: JSX.Element
-    }
-
-
-    const colourStyles: StylesConfig<SortOptions> = {
-        // Wrapper of Selected item
-        control: (styles, {menuIsOpen}) => ({
-            ...styles,
-            backgroundColor: theme === "dark" ? "#363636" : "#F5F5F5",
-            color: theme === "dark" ? "#FFFFFF" : "#1D1D1D",
-           borderColor: theme === "dark" ? "#202020" : "#D2D2D2"
-        }),
-
-        // Selected Item
-        singleValue: (styles) => ({
-            ...styles,
-            backgroundColor: theme === "dark" ? "#363636" : "#F5F5F5",
-            color: theme === "dark" ? "#FFFFFF" : "#1D1D1D"
-        }),
-
-        // Menu Wrapper
-        menu: (styles) => ({...styles, backgroundColor: theme === "dark" ? "#363636" : "#F5F5F5"}),
-
-
-        // Menu Item
-        option: (styles, {isFocused, isSelected}) => ({
-            ...styles,
-            backgroundColor: theme === "dark"
-                ? (isFocused) ? "#282828" : "#363636"
-                : (isFocused) ? "#F5F5F5" : "#FFFFFF",
-            color: theme === "dark" ? "#FFFFFF" : "#1D1D1D"
-        }),
-
-        // Dropdown Arrow
-        dropdownIndicator: (styles, {isFocused, isDisabled, }) => ({
-            ...styles,
-            cursor: "pointer",
-            filter: isFocused ? "brightness(0) invert(0) invert(42%) sepia(69%) saturate(900%) hue-rotate(186deg) brightness(99%) contrast(94%)" : "brightness(0) invert(0) invert(54%) sepia(16%) saturate(0%) hue-rotate(190deg) brightness(93%) contrast(92%)"
-        }),
-
-    };
-
-    const options: SortOptions[] = [
-        {value: SortType.DATE_CREATE_INCREASING, label: <div className={"sort sort--increasing"}>Date Created</div>},
-        {value: SortType.DATE_CREATE_DECREASING, label: <div className={"sort sort--decreasing"}>Date Created</div>},
-        {value: SortType.DATE_COMPLETE_INCREASING, label: <div className={"sort sort--increasing"}>Date Complete</div>},
-        {value: SortType.DATE_COMPLETE_DECREASING, label: <div className={"sort sort--decreasing"}>Date Complete</div>},
-        {value: SortType.TITLE_INCREASING, label: <div className={"sort sort--increasing"}>Title</div>},
-        {value: SortType.TITLE_DECREASING, label: <div className={"sort sort--decreasing"}>Title</div>},
-    ]
-
     const handleSelectChange = (selectedOption: SingleValue<SortOptions> | MultiValue<SortOptions>) => {
         if (selectedOption && "value" in selectedOption) {
             setSortType(selectedOption.value)
         }
+    }
+
+    const handleNewTask = () => {
+        navigate('/add-task')
     }
 
     useEffect(() => {
@@ -147,19 +108,25 @@ const Home = () => {
             setFilterTags(filters.split(','))
     }, [])
 
+
+    if ([statusType.IDLE].includes(status))
+        return <Loading/>
+
+    if ([statusType.ERROR].includes(status))
+        return <div>{error}</div>
+
     return (
         <div className="Home">
 
             <div className={"Home__controls"}>
-                <input className={` Home__search text-input text-input--${theme}`} type={"text"}
-                       placeholder={"Search Task"}
-                       value={searchInput} onInput={handleSearch}/>
+                <Input
+                    className={"Home__search"}
+                    placeholder={"Search Task"}
+                    value={searchInput}
+                    onInput={handleSearch}
+                />
 
-                <Link to={"/add-task"}>
-                    <button className={`button button--${theme} Home__add-button`}>
-                        + New Task
-                    </button>
-                </Link>
+                <Button className={"Home__add-button"} text={"+ New Task"} onClick={handleNewTask}/>
 
             </div>
 
@@ -207,9 +174,7 @@ const Home = () => {
 
                 </div>
 
-                <Select className={"Home__sort"} options={options} styles={colourStyles} onChange={handleSelectChange}
-                        defaultValue={options[1]}/>
-
+                <SortSelect onChange={handleSelectChange} className={"Home__sort"}/>
 
             </div>
 

@@ -21,7 +21,7 @@ const App = () => {
     useEffect(() => {
         const checkAPI = async () => {
             try {
-                await serverAPI.get('http://localhost:3004/items')
+                await serverAPI.get('items')
             } catch (e) {
                 change_API_path()
             } finally {

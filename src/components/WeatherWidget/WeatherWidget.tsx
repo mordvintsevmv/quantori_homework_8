@@ -1,5 +1,5 @@
 import {FC, useEffect} from "react";
-import "./WeatherWidget.css"
+import "./WeatherWidget.scss"
 import {getCurrentPosition} from "../../api/weatherAPI";
 import {useTypedDispatch, useTypedSelector} from "../../hooks/reduxHooks";
 import {fetchWeather} from "../../redux/slices/weatherSlice";
@@ -9,11 +9,13 @@ import {statusType} from "../../types/statusType";
 interface WeatherWidgetProps {
     className?: string
 }
+
 const WeatherWidget: FC<WeatherWidgetProps> = ({className}) => {
 
-    const dispatch = useTypedDispatch()
     const {weather, status, error} = useTypedSelector(state => state.weather)
     const theme = useTypedSelector(state => state.theme)
+
+    const dispatch = useTypedDispatch()
 
     const isLoading = [statusType.IDLE, statusType.LOADING].includes(status)
 

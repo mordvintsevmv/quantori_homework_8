@@ -12,6 +12,7 @@
 
 .loading-gif {
     height: 30%;
+    max-height: 80px;
 
     position: absolute;
     top: 50%;

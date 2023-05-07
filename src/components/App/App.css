@@ -1,5 +1,6 @@
 .App {
     width: 100vw;
+    min-height: 100vh;
     padding: 44px 164px;
 }
 

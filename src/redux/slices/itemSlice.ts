@@ -46,11 +46,13 @@ export const itemSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchItems.pending, (state) => {
             state.status = statusType.LOADING
+            state.error = null;
         })
 
         builder.addCase(fetchItems.fulfilled, (state, action) => {
             state.status = statusType.SUCCESS;
             state.items = action.payload
+            state.error = null;
         })
 
         builder.addCase(fetchItems.rejected, (state, action) => {

@@ -35,10 +35,8 @@ const Subtask: FC<SubtaskProps> = ({item_id, subtask}) => {
             .then(() => dispatch(fetchItems()))
     }
 
-
     return (
         <div className={"subtask"}>
-
 
             <button className={"subtask__checkbox"} onClick={handleCheck}>
                 <img

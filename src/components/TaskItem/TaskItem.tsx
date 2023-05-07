@@ -12,14 +12,13 @@ import arrow_closed from "./assets/arrow_closed.svg"
 import arrow_opened from "./assets/arrow_opened.svg"
 
 import TaskTag from "../TaskTag/TaskTag";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {serverCreateSubtask, serverDeleteItem, serverUpdateItem} from "../../api/itemsAPI";
 import {useTypedDispatch} from "../../hooks/reduxHooks";
 import {fetchItems} from "../../redux/slices/itemSlice";
 import Subtask from "./Subtask/Subtask";
-
-const month_array: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-const day_array: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+import {getDayText} from "../../commonScripts/dateFunctions";
+import IconButton from "../BaseComponents/IconButton";
 
 interface TaskItemProps {
     item: Item,
@@ -29,35 +28,14 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isExpanded, setIsExpanded] = useState<boolean>(false)
+
     const dispatch = useTypedDispatch()
 
-    // Parsing date (for situations when there is string instead of Date)
-    const parsed_date: Date = new Date(Date.parse(item.date_complete))
-    const today: Date = new Date();
+    const navigate = useNavigate()
 
     const description_ref = useRef<HTMLTextAreaElement>(null)
 
-    // Creating text for date
-    let day_text: string;
-
-    if (parsed_date.getFullYear() === today.getFullYear()
-        && parsed_date.getMonth() === today.getMonth()
-        && parsed_date.getDate() === today.getDate()
-    ) {
-        day_text = 'Today'
-    } else if (parsed_date.getFullYear() === today.getFullYear()
-        && parsed_date.getMonth() === today.getMonth()
-        && parsed_date.getDate() - today.getDate() === 1
-    ) {
-        day_text = 'Tomorrow'
-    } else if (parsed_date.getFullYear() === today.getFullYear()
-        && parsed_date.getMonth() === today.getMonth()
-        && parsed_date.getDate() - today.getDate() === -1
-    ) {
-        day_text = 'Yesterday'
-    } else {
-        day_text = `${day_array[parsed_date.getDay()]}, ${parsed_date.getDate()} ${month_array[parsed_date.getMonth()]}`
-    }
+    const day_text = getDayText(item.date_complete)
 
     const tags: JSX.Element[] = item.tag.map((tag: string) => <TaskTag name={tag} key={tag}
                                                                        isColored={!item.isChecked}/>)
@@ -66,6 +44,10 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
         setIsLoading(true);
         serverUpdateItem(item.id, {isChecked: !item.isChecked})
             .then(() => dispatch(fetchItems()))
+    }
+
+    const handleEdit = () => {
+        navigate(`/edit/${item.id}`)
     }
 
     const handleDelete = () => {
@@ -83,7 +65,7 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
             .then(() => dispatch(fetchItems()))
     }
 
-    const handleCreate = () => {
+    const handleCreateSubtask = () => {
         serverCreateSubtask(item.id, {
             id: crypto.randomUUID(),
             title: "",
@@ -117,20 +99,28 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
                 {!item.isChecked &&
                     <div className={"task-item__controls"}>
 
-                        <button className={"task-item__control-item icon-button"}>
-                            <Link to={`/edit/${item.id}`}>
-                                <img src={edit_icon} alt={"Edit"}/>
-                            </Link>
-                        </button>
+                        <IconButton
+                            className={"task-item__control-item"}
+                            src={edit_icon}
+                            alt={"Edit"}
+                            onClick={handleEdit}
+                        />
 
-                        <button className={"task-item__control-item icon-button"} onClick={handleDelete}>
-                            <img src={trash_icon} alt={"Delete"}/>
-                        </button>
+                        <IconButton
+                            className={"task-item__control-item"}
+                            src={trash_icon}
+                            alt={"Delete"}
+                            onClick={handleDelete}
+                        />
 
-                        <button className={"task-item__control-item task-item__control-item--expand icon-button"}
-                                onClick={handleExpand}>
-                            <img src={isExpanded ? arrow_opened : arrow_closed} alt={"Expand"}/>
-                        </button>
+                        <IconButton
+                            className={"task-item__control-item task-item__control-item-expand"}
+                            src={isExpanded ? arrow_opened : arrow_closed}
+                            alt={"Expand"}
+                            onClick={handleExpand}
+                            size={"s"}
+                        />
+
 
                     </div>
                 }
@@ -143,7 +133,8 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
 
                 <div className={"task-item__subtasks"}>
                     {item.subtasks.map((subtask) => <Subtask item_id={item.id} subtask={subtask} key={subtask.id}/>)}
-                    <button className={"task-item__create-subtask"} onClick={handleCreate}>+ Create Subtask</button>
+                    <button className={"task-item__create-subtask"} onClick={handleCreateSubtask}>+ Create Subtask
+                    </button>
                 </div>
 
                 <div className={`task-item__bottom task-item__bottom--expanded`}>
