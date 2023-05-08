@@ -90,6 +90,10 @@ Extra:
    1. [(HW8) New json Server](#solutions-hosting)
    1. [(HW8) Optimizing App](#solutions-optimizing)
    1. [(HW8) Using useRef](#solutions-refs)
+   1. [(HW9) Using Redux Store](#solutions-redux)
+   1. [(HW9) Using React Router for searchParams](#solutions-router)
+   1. [(HW9) Syncing State between Tabs](#solutions-sync)
+   1. [(HW9) Custom Base Components (UI-kit)](#solutions-base-components)
 5. [Contacts](#contacts)
 
 ---
@@ -272,6 +276,162 @@ onInput = {handleTitleChange} />
         disabled={titleState.length < 1}>Add Task
 </button>
 ```
+
+---
+
+### <a name="solutions-redux">Using Redux Store</a>
+
+Redux Store was used for storing all data, that can be used globally in the application. Therefore, 3 Redux Slice were created:
+
+*src/redux:*
+- **Item Slice:** items, fetch status (idle, loading, error or success), error message and status of TodayShown Modal;
+- **Weather Slice:** weather state, fetch status and error message;
+- **Theme Slice:** theme mode (dark or light)
+
+Also, custom Typed Hooks have been developed for useDispatch and useSelector:
+
+```javascript
+export const useTypedDispatch: () => AppDispatch = useDispatch
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
+```
+*src/hooks*
+
+Redux-thunk was used for fetching data from the server (tasks and weather). If the data is fetched successfully, the data itself is returned. In case of an error, the error message is returned, which the user will then see:
+
+*Example of Async Thunk:*
+```javascript
+export const fetchItems = createAsyncThunk(
+    'items/fetchItems',
+    async (arg, thunkAPI) => {
+        try {
+            const response = await serverFetchItems()
+            return thunkAPI.fulfillWithValue(response)
+        } catch (error) {
+            if (axios.isAxiosError(error))
+                return thunkAPI.rejectWithValue(error.message)
+            else
+                return thunkAPI.rejectWithValue(`Unexpected error`)
+        }
+    }
+)
+```
+
+*Data handling:*
+```javascript
+export const itemSlice = createSlice({
+    ...
+    extraReducers: (builder) => {
+
+        builder.addCase(fetchItems.fulfilled, (state, action) => {
+            state.status = statusType.SUCCESS;
+            state.items = action.payload
+            state.error = null;
+        })
+
+        builder.addCase(fetchItems.rejected, (state, action) => {
+            state.status = statusType.ERROR;
+            state.error = action.payload
+        })
+    }
+})
+```
+
+This approach allows always know about the status of the data and show the necessary information to the user:
+
+- Loading page on data Idle or Loading status;
+- Error message on Error status;
+- Content on Success status.
+
+---
+
+### <a name="solutions-router">Using React Router for searchParams</a>
+
+In order to store search query and applied tag filters in URI, it was decided to use a useSearchParams hook from React Router framework:
+```javascript
+const [searchParams, setSearchParams] = useSearchParams()
+
+const searchQuery = searchParams.get("q")
+const filtersQuery = searchParams.get("filters")
+```
+*src/components/Home/Home.tsx*
+
+Search and Tag filters are updated for each change in the filtering parameters:
+- On every change of search input;
+- On adding or removing Tag filter.
+
+In order to save the parameters when the page is reloaded, it was decided to use useEffect and set the initial value of the searchInput and Filters state:
+```javascript
+    useEffect(() => {
+    if (searchQuery)
+        setSearchInput(searchQuery)
+
+    if (filtersQuery)
+        setFilterTags(filtersQuery.split(','))
+}, [])
+```
+*src/components/Home/Home.tsx*
+
+This approach made it possible to use filtering by Search Query and by several Tags at once and save the parameters when the page is reloaded.
+
+---
+
+### <a name="solutions-sync">Syncing State between Tabs</a>
+
+To synchronize the state, it was decided to use <a href="https://github.com/aohua/redux-state-sync">Redux-State-Sync 3</a> middleware.
+
+It was necessary to add middleware to the store:
+```javascript
+export const store = configureStore({
+    reducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(createStateSyncMiddleware()),
+})
+```
+*src/redux/store.ts*
+
+And wrap reducers with:
+```javascript
+const reducer = withReduxStateSync(combineReducers({
+    items: itemReducer,
+    weather: weatherReducer,
+    theme: themeReducer
+}))
+```
+*src/redux/store.ts*
+
+In order for the new tab to immediately receive the state of the parent tab, also need to call the function:
+```javascript
+initStateWithPrevTab(store);
+```
+*src/redux/store.ts*
+
+**Result:**
+
+![tab_syncing.gif](readme-img/tab_syncing.gif)
+
+---
+
+### <a name="solutions-base-components">Custom Base Components (UI-kit)</a>
+
+In order for the base elements (inputs, buttons and etc) of the App to have one style,
+it was decided to start creating a set of basic components with the predefined styles.
+The <a href="https://mui.com">MUI library</a> approach was taken as a basis, but in conform with the layout of the task.
+
+The developed components automatically customize to a light and dark theme,
+have fixed dimensions and the possibility of customizing (for example, *s*, *m* or *l* sizes, *transparent* button or *colored* tag).
+
+Dark theme:
+
+![base_dark.png](readme-img/base_dark.png)
+
+Light Theme:
+
+![base_light.png](readme-img/base_light.png)
+
+
+This approach allows not to think about assigning the necessary className to the element
+(so that the styles of all similar components are the same),
+and also not to manually add styles for dark and light themes.
 
 ---
 
