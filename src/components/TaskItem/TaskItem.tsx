@@ -121,7 +121,6 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
                             size={"s"}
                         />
 
-
                     </div>
                 }
             </div>
@@ -129,7 +128,6 @@ const TaskItem: FC<TaskItemProps> = memo(({item}) => {
             {isExpanded && <div className={"task-item__details"}>
                 <textarea defaultValue={item.description} placeholder={"Task Description"}
                           className={"task-item__description"} ref={description_ref} onBlur={handleDescription}/>
-
 
                 <div className={"task-item__subtasks"}>
                     {item.subtasks.map((subtask) => <Subtask item_id={item.id} subtask={subtask} key={subtask.id}/>)}

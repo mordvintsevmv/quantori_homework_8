@@ -1,5 +1,5 @@
 import React, {FC, memo} from "react";
-import {SortType} from "../../commonScripts/item_sorting";
+import {SortType} from "../../commonScripts/itemSorting";
 import Select, {MultiValue, SingleValue, StylesConfig} from "react-select";
 import {useTypedSelector} from "../../hooks/reduxHooks";
 
@@ -63,8 +63,12 @@ const SortSelect: FC<SortSelectProps> = memo(({className, onChange}) => {
         {value: SortType.TITLE_DECREASING, label: <div className={"sort sort--decreasing"}>Title</div>},
     ]
 
-    return <Select className={className} options={options} styles={colourStyles} onChange={onChange}
-                   defaultValue={options[1]}/>
+    return <Select
+        className={className}
+        options={options}
+        styles={colourStyles}
+        onChange={onChange}
+        defaultValue={options[1]}/>
 })
 
 export default SortSelect

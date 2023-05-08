@@ -47,8 +47,11 @@ const TaskTag: FC<TaskTagProps> = ({name, isColored = true, isEdit = false, ref_
     if (isEdit) {
         return (
             <div className={`task-tag task-tag--${theme}-${tag_color}`}>
-                <input className={"task-tag__input"} type={"text"} placeholder={name} onInput={handleInput}
-                       ref={ref_input}/>
+                <input
+                    className={"task-tag__input"}
+                    type={"text"} placeholder={name}
+                    onInput={handleInput}
+                    ref={ref_input}/>
             </div>
         )
     } else {

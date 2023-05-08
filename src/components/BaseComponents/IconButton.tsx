@@ -8,6 +8,7 @@ interface IconButtonProps {
     src: string,
     alt?: string
 }
+
 const IconButton: FC<IconButtonProps> = ({className, size = "m", onClick, src, alt}) => {
     return (
         <button onClick={onClick} className={`icon-button icon-button--${size} ${className}`}>

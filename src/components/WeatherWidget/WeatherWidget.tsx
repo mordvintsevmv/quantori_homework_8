@@ -20,17 +20,24 @@ const WeatherWidget: FC<WeatherWidgetProps> = ({className}) => {
     const isLoading = [statusType.IDLE, statusType.LOADING].includes(status)
 
     useEffect(() => {
-        getCurrentPosition().then((location) => dispatch(fetchWeather(location)))
+        getCurrentPosition()
+            .then((location) => dispatch(fetchWeather(location)))
     }, [dispatch])
 
     return (
         <div className={`weather-widget weather-widget--${theme} ${className}`}>
-            <img className={`weather-widget__icon ${isLoading ? "skeleton skeleton-img" : null}`}
-                 src={error ? error_icon : weather.weather_icon} alt={error ? "Error" : weather.weather_text}/>
+
+            <img
+                className={`weather-widget__icon ${isLoading ? "skeleton skeleton-img" : null}`}
+                src={error ? error_icon : weather.weather_icon}
+                alt={error ? "Error" : weather.weather_text}/>
+
             <div
                 className={`weather-widget__location ${isLoading ? "skeleton skeleton-text" : null}`}>{error ? error : weather.city}</div>
+
             <div
                 className={`weather-widget__temp ${isLoading ? "skeleton skeleton-text" : null}`}>{error ? "" : weather.temp_c}</div>
+
         </div>
     )
 }

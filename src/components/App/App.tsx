@@ -43,18 +43,21 @@ const App = () => {
             <Header title={"ToDo List"}/>
 
             <Routes>
+
                 <Route path="/" element={<Home/>}>
 
-                    <Route path="add-task" element={<Modal
-                        modal_children={<AddTask/>}/>}/>
-                    <Route path="edit/:id" element={<Modal
-                        modal_children={<EditTask/>}/>}/>
+                    <Route path="add-task"
+                           element={<Modal modal_children={<AddTask/>}/>}/>
+
+                    <Route path="edit/:id"
+                           element={<Modal modal_children={<EditTask/>}/>}/>
+
                 </Route>
+
             </Routes>
 
             {!isTodayShown && status === statusType.SUCCESS &&
                 <Modal onClose={handleTodayClose} modal_children={<TodayTasks/>}/>}
-
 
         </div>
     );

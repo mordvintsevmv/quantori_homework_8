@@ -9,9 +9,10 @@ interface InputProps {
     value?: string,
     defaultValue?: string,
     onInput?: (event: React.KeyboardEvent<HTMLInputElement>) => void,
-    ref?: React.Ref<HTMLInputElement>
+    innerRef?: React.Ref<HTMLInputElement>
 }
-const Input: FC<InputProps> = ({className, type = "text", placeholder, value, defaultValue, onInput, ref}) => {
+
+const Input: FC<InputProps> = ({className, type = "text", placeholder, value, defaultValue, onInput, innerRef}) => {
     const theme = useTypedSelector(state => state.theme)
 
     return <input
@@ -21,7 +22,7 @@ const Input: FC<InputProps> = ({className, type = "text", placeholder, value, de
         value={value}
         defaultValue={defaultValue}
         onInput={onInput}
-        ref={ref}
+        ref={innerRef}
     />
 
 }

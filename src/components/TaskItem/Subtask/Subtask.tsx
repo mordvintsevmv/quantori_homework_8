@@ -8,6 +8,7 @@ import {serverDeleteSubtask, serverUpdateSubtask} from "../../../api/itemsAPI";
 import {useTypedDispatch} from "../../../hooks/reduxHooks";
 import {fetchItems} from "../../../redux/slices/itemSlice";
 import trash_icon from "../assets/delete-new-value.svg";
+import IconButton from "../../BaseComponents/IconButton";
 
 interface SubtaskProps {
     item_id: string,
@@ -49,9 +50,12 @@ const Subtask: FC<SubtaskProps> = ({item_id, subtask}) => {
                    className={`subtask__title ${subtask.isChecked ? "subtask__title--checked" : "subtask__title--unchecked"}`}
                    onBlur={handleTitle} ref={title_ref}/>
 
-            <button className={"subtask__delete task-item__control-item"} onClick={handleDelete}>
-                <img src={trash_icon} alt={"Delete"}/>
-            </button>
+            <IconButton
+                src={trash_icon}
+                onClick={handleDelete}
+                alt={"Delete"}
+                size={"s"}
+            />
 
         </div>
     )

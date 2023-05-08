@@ -1,0 +1,53 @@
+.custom-check-tag {
+  cursor: pointer;
+  border-radius: 7px;
+}
+
+.custom-check-tag__input {
+  display: none;
+}
+
+.custom-check-tag:has(.custom-check-tag__input:checked) {
+  .task-tag--dark-blue {
+    outline: 1px solid #E2F6E2;
+  }
+
+  .task-tag--light-blue {
+    outline: 1px solid #0053CF;
+  }
+
+  .task-tag--light-purple {
+    outline: 1px solid #9747FF;
+  }
+
+  .task-tag--light-green {
+    outline: 1px solid #639462;
+  }
+
+  .task-tag--light-orange {
+    outline: 1px solid #EA8C00;
+  }
+
+  .task-tag--light-red {
+    outline: 1px solid #EF3F3E;
+  }
+
+  .task-tag--dark-purple {
+    outline: 1px solid #E8D7FF;
+  }
+
+  .task-tag--dark-green {
+    outline: 1px solid #E2F6E2;
+  }
+
+  .task-tag--dark-orange {
+    outline: 1px solid #FFECD8;
+  }
+
+  .task-tag--dark-red {
+    outline: 1px solid #FCEECB;
+  }
+}
+
+
+

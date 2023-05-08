@@ -50,10 +50,6 @@
     margin-bottom: 40px;
 }
 
-.Home__list {
-    margin-bottom: 42px;
-}
-
 .Home__add-button {
     min-width: 158px;
 }
@@ -77,14 +73,6 @@
     background-repeat: no-repeat;
     background-image: url("assets/decreasing.svg");
 }
-
-@media screen and (max-width: 1200px) {
-    .Home__list {
-        margin-bottom: 20px;
-    }
-
-}
-
 
 @media screen and (max-width: 900px) {
     .Home__controls {
@@ -113,10 +101,6 @@
 
     .Home__sort {
         width: calc(100vw - 120px);
-    }
-
-    .Home__list {
-        margin-bottom: 20px;
     }
 }
 
@@ -149,9 +133,5 @@
 
     .Home__sort {
         width: calc(100vw - 64px);
-    }
-
-    .Home__list {
-        margin-bottom: 20px;
     }
 }

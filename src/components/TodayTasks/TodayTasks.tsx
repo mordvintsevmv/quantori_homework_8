@@ -5,7 +5,6 @@ import {useTypedDispatch, useTypedSelector} from "../../hooks/reduxHooks";
 import {setTodayShown} from "../../redux/slices/itemSlice";
 import Button from "../BaseComponents/Button";
 
-
 const TodayTasks: FC = () => {
 
     const {items} = useTypedSelector(state => state.items)

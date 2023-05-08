@@ -5,11 +5,11 @@ import {Item} from "../../types/Item";
 import {Outlet, useNavigate, useSearchParams} from "react-router-dom";
 import {MultiValue, SingleValue} from 'react-select'
 import TaskTag from "../TaskTag/TaskTag";
-import {sortItems, SortType} from "../../commonScripts/item_sorting";
+import {sortItems, SortType} from "../../commonScripts/itemSorting";
 import {useTypedSelector} from "../../hooks/reduxHooks";
 import {statusType} from "../../types/statusType";
 import Loading from "../Loading/Loading";
-import SortSelect, {SortOptions} from "../SortSelect/SortSelect";
+import SortSelect, {SortOptions} from "./SortSelect";
 import Button from "../BaseComponents/Button";
 import Input from "../BaseComponents/Input";
 
@@ -31,7 +31,6 @@ const Home = () => {
     // Sorting and filtering items
     const in_work_items: Item[] = useMemo(
         () => {
-
             // filtering by search input
             let temp_items = items.filter((item) => !item.isChecked && (item.title.toLowerCase().replace(/\s+/g, '').includes(searchInput.toLowerCase().replace(/\s+/g, '') || '')))
 
@@ -127,7 +126,6 @@ const Home = () => {
                 />
 
                 <Button className={"Home__add-button"} text={"+ New Task"} onClick={handleNewTask}/>
-
             </div>
 
             <div className={"Home__filters"}>

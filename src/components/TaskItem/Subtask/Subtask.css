@@ -10,9 +10,6 @@
     margin-bottom: 15px;
 }
 
-.subtask__checkbox {
-}
-
 .subtask__title {
     all: unset;
 }
@@ -28,12 +25,4 @@
 
 .subtask__checkbox-img--unchecked:hover {
     filter: brightness(0.8);
-}
-
-.subtask__checkbox-img {
-
-}
-
-.subtask__delete {
-    width: 14px;
 }

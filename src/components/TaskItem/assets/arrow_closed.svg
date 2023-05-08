@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
-
+<svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" version="1.1">
      <path id="arrow_up-[#838383]" d="M5.366 0.292 C5.771 -0.097 6.427 -0.097 6.83 0.292 L15.393 8.556 C16.202 9.336 16.202 10.603 15.393 11.383 L6.768 19.708 C6.368 20.093 5.72 20.098 5.314 19.718 4.899 19.329 4.895 18.688 5.303 18.293 L13.197 10.676 C13.602 10.286 13.602 9.653 13.197 9.262 L5.366 1.705 C4.961 1.316 4.961 0.682 5.366 0.292" fill="#838383" fill-opacity="1" stroke="none"/>
-
 </svg>

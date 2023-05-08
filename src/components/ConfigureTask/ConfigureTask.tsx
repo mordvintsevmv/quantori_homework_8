@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from "react";
-import CustomCheckInput from "../CustomCheckInput/CustomCheckInput";
+import CustomCheckTag from "../CustomCheckTag/CustomCheckTag";
 import Loading from "../Loading/Loading";
 import "./ConfigureTask.css"
 import {useNavigate, useParams} from "react-router-dom";
@@ -41,6 +41,11 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
     const tag_other_ref = useRef<HTMLInputElement>(null)
     const tag_custom_check_ref = useRef<HTMLInputElement>(null)
     const tag_custom_input_ref = useRef<HTMLInputElement>(null)
+
+    const typeText =
+        type === configureTaskType.EDIT ? "Edit Task" :
+            type === configureTaskType.CREATE ? "Add Task" :
+                "Unknown operation"
 
     const handleSubmit = () => {
 
@@ -133,12 +138,6 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
         setTitleState(target.value)
     }
 
-
-    const typeText =
-        type === configureTaskType.EDIT ? "Edit Task" :
-            type === configureTaskType.CREATE ? "Add Task" :
-                "Unknown operation"
-
     return (
         <div className={`configure-task configure-task--${theme} ${isLoading ? "configure-task--loading" : null}`}>
             <h3 className={"configure-task__title"}>{typeText}</h3>
@@ -152,29 +151,36 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
 
             <div className={"configure-task__options"}>
                 <form className={"configure-task__tag-list"}>
-                    <CustomCheckInput name={'tag'} value={"home"} outline={theme === "dark" ? "#E2F6E2" : "#639462"}
-                                      type={"checkbox"}
-                                      ref_check={tag_home_ref}/>
-                    <CustomCheckInput name={'tag'} value={"health"} outline={theme === "dark" ? "#E8D7FF" : "#0053CF"}
-                                      type={"checkbox"}
-                                      ref_check={tag_health_ref}/>
-                    <CustomCheckInput name={'tag'} value={"work"} outline={theme === "dark" ? "#C2DEF4" : "#9747FF"}
-                                      type={"checkbox"}
-                                      ref_check={tag_work_ref}/>
-                    <CustomCheckInput name={'tag'} value={"other"} outline={theme === "dark" ? "#FFECD8" : "#EA8C00"}
-                                      type={"checkbox"}
-                                      isDefault={true}
-                                      ref_check={tag_other_ref}/>
-                    <CustomCheckInput name={'tag'} value={"..."} outline={theme === "dark" ? "#FCEECB" : "#EF3F3E"}
-                                      type={"checkbox"}
-                                      ref_check={tag_custom_check_ref}
-                                      ref_input={tag_custom_input_ref} isEdit={true}/>
+
+                    <CustomCheckTag value={"home"}
+                                    type={"checkbox"}
+                                    ref_check={tag_home_ref}/>
+
+                    <CustomCheckTag value={"health"}
+                                    type={"checkbox"}
+                                    ref_check={tag_health_ref}/>
+
+                    <CustomCheckTag value={"work"}
+                                    type={"checkbox"}
+                                    ref_check={tag_work_ref}/>
+
+                    <CustomCheckTag value={"other"}
+                                    type={"checkbox"}
+                                    isDefault={true}
+                                    ref_check={tag_other_ref}/>
+
+                    <CustomCheckTag value={"..."}
+                                    type={"checkbox"}
+                                    ref_check={tag_custom_check_ref}
+                                    ref_input={tag_custom_input_ref}
+                                    isEdit={true}/>
+
                 </form>
 
                 <Input
                     className={"configure-task__date"}
                     type={"date"}
-                    ref={date_ref}
+                    innerRef={date_ref}
                     defaultValue={`${today.toLocaleDateString('en-CA')}`}
                 />
 
@@ -182,10 +188,17 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
 
             <div className={"configure-task__buttons"}>
 
-                <Button text={"Cancel"} className={"configure-task__cancel-button"} onClick={handleClose} isTransparent={true}/>
+                <Button
+                    text={"Cancel"}
+                    className={"configure-task__cancel-button"}
+                    onClick={handleClose}
+                    isTransparent={true}/>
 
-                <Button text={typeText} className={"configure-task__ok-button"} onClick={handleSubmit}
-                        disabled={titleState.length < 1}/>
+                <Button
+                    text={typeText}
+                    className={"configure-task__ok-button"}
+                    onClick={handleSubmit}
+                    disabled={titleState.length < 1}/>
 
             </div>
 
