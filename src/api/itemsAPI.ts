@@ -86,7 +86,7 @@ export const serverUpdateSubtask = async (item_id: string, subtask_id: string, u
 export const change_API_path = (): void => {
     const warning_text: HTMLParagraphElement = document.createElement('p')
     warning_text.innerText = "Fetching data from remote server"
-    warning_text.style.opacity = "0.3"
+    warning_text.style.color = "#838383"
     warning_text.style.fontSize = "12px";
     warning_text.style.position = "fixed";
     warning_text.style.bottom = "5px";

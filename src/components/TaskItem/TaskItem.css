@@ -166,7 +166,7 @@
     }
 
     .task-item__title {
-        width: calc(100vw - 120px - 24px - 100px);
+        width: calc(100vw - 120px - 24px - 140px);
     }
 
     .task-item__details {

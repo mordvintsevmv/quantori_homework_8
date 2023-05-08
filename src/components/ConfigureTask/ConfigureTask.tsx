@@ -142,9 +142,13 @@ const ConfigureTask: FC<ConfigureTaskProps> = ({type}) => {
     return (
         <div className={`configure-task configure-task--${theme} ${isLoading ? "configure-task--loading" : null}`}>
             <h3 className={"configure-task__title"}>{typeText}</h3>
-            <input placeholder={"Task Title"} className={`text-input text-input--${theme} configure-task__input`}
-                   type={"text"}
-                   value={titleState} onInput={handleTitleChange}></input>
+
+            <Input
+                placeholder={"Task Title"}
+                className={"configure-task__input"}
+                value={titleState}
+                onInput={handleTitleChange}
+            />
 
             <div className={"configure-task__options"}>
                 <form className={"configure-task__tag-list"}>

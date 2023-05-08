@@ -21,8 +21,8 @@ const Home = () => {
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const search = searchParams.get("q")
-    const filters = searchParams.get("filters")
+    const searchQuery = searchParams.get("q")
+    const filtersQuery = searchParams.get("filters")
 
     const [filterTags, setFilterTags] = useState<string[]>([])
     const [sortType, setSortType] = useState<SortType>(SortType.DATE_CREATE_DECREASING)
@@ -101,11 +101,11 @@ const Home = () => {
     }
 
     useEffect(() => {
-        if (search)
-            setSearchInput(search)
+        if (searchQuery)
+            setSearchInput(searchQuery)
 
-        if (filters)
-            setFilterTags(filters.split(','))
+        if (filtersQuery)
+            setFilterTags(filtersQuery.split(','))
     }, [])
 
 
