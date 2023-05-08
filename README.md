@@ -1,3 +1,29 @@
+# React ToDo List
+
+### Run project
+
+Install all node modules:
+```shell
+npm i
+```
+
+Start App with Local DB:
+```shell
+npm run start
+```
+
+Start App **without** Local DB:
+```shell
+npm run serve
+```
+
+Build project:
+```shell
+npm run build
+```
+
+---
+
 # Quantori Homework #8
 
 ### React
@@ -50,7 +76,7 @@ From Task:
 
 Extra:
 
-- [X] (Beta) Light and Dark theme;
+- [X] Dark and Light theme;
 - [X] Description for Tasks;
 - [X] Subtasks.
 
