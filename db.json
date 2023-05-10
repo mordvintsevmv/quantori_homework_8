@@ -1,0 +1,67 @@
+{
+  "items_simple": [
+    {
+      "id": "4cbf5652-c7d7-441a-87e4-a1c4cdb6a88c",
+      "isChecked": false,
+      "title": "Play Resident Evil 4 (Remake)",
+      "tag": "other",
+      "date": "2023-05-17"
+    },
+    {
+      "id": "691d4cd2-60d5-40a8-be95-18ba7ff4eead",
+      "isChecked": false,
+      "title": "Celebrate my birthday",
+      "tag": "home",
+      "date": "2023-12-13"
+    },
+    {
+      "id": "f2d74406-23e4-43df-a04a-f797ffb171d8",
+      "isChecked": false,
+      "title": "Buy new eyeglasses",
+      "tag": "health",
+      "date": "2023-09-07"
+    },
+    {
+      "id": "f63b93e4-8ad1-4e44-a3dc-45635dcce8a0",
+      "isChecked": true,
+      "title": "Watch \"Manhattan\" by Woody Allen",
+      "tag": "home",
+      "date": "2023-01-13"
+    },
+    {
+      "id": "37b17682-439c-4935-8cbb-e641cec79767",
+      "isChecked": true,
+      "title": "Come up with a new joke",
+      "tag": "home",
+      "date": "2023-02-17"
+    },
+    {
+      "id": "8e1d4671-30dc-4360-ac82-b3881a1e211b",
+      "isChecked": true,
+      "title": "Find an alternative to JSONbin",
+      "tag": "work",
+      "date": "2023-05-11"
+    },
+    {
+      "id": "3b1b66d7-ed44-4740-aa8a-75c8ebb14014",
+      "isChecked": true,
+      "title": "Complete Homework #8",
+      "tag": "work",
+      "date": "2023-05-03"
+    },
+    {
+      "id": "5cd5db7b-4f33-4a2e-a085-4cad1b07dc7a",
+      "isChecked": false,
+      "title": "Complete Homework #9",
+      "tag": "work",
+      "date": "2023-05-10"
+    },
+    {
+      "id": "698e35d6-3504-4a5a-a1d2-2cc032ba3438",
+      "isChecked": false,
+      "title": "Complete Homework #10",
+      "tag": "work",
+      "date": "2023-05-17"
+    }
+  ]
+}

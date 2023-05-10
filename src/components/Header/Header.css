@@ -1,0 +1,21 @@
+.Header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Header__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 36px;
+
+    color: #1D1D1D;
+}
+
+@media screen and (max-width: 600px) {
+    .Header {
+        flex-direction: column;
+    }
+}

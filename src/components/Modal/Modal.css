@@ -1,0 +1,33 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 1000;
+
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+
+    width: fit-content;
+    height: fit-content;
+
+    background: #FFFFFF;
+
+    border-radius: 24px;
+
+    z-index: 1001;
+
+    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.15);
+}

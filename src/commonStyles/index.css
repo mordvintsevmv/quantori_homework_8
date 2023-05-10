@@ -1,0 +1,37 @@
+body, html {
+    font-family: 'Nunito', sans-serif;
+    color: #1D1D1D;
+}
+
+
+ul {
+    list-style-type: none
+}
+
+.skeleton {
+    background: #F1F2F3;
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+.skeleton-text {
+    height: 24px;
+    width: 46px;
+    border-radius: 12px;
+}
+
+.skeleton-img {
+    border-radius: 50%;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: hsl(200, 20%, 80%);
+    }
+    100% {
+        background-color: hsl(200, 20%, 95%);
+    }
+}
+
+.outline {
+    outline: 1px solid red;
+}
